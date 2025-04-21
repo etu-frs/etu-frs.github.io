@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>إدارة آراء العملاء - لوحة الإدارة</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #1a1a1a;
+      color: #fff;
+      direction: rtl;
+    }
+    .testimonial-card {
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .testimonial-card:hover {
+      transform: translateY(-5px);
+    }
+    .testimonial-pending {
+      border-right: 4px solid #fbbf24;
+    }
+    .testimonial-approved {
+      border-right: 4px solid #10b981;
+    }
+    .rating {
+      color: #fbbf24;
+    }
+    .rating-star {
+      margin-left: 2px;
+    }
+    .filter-btn.active {
+      background-color: #fbbf24;
+      color: #000;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 d-md-block admin-sidebar collapse">
+        <div class="pt-4 pb-2 px-3">
+          <h3 class="text-yellow-400 text-center mb-4">لوحة الإدارة</h3>
+          <div class="text-center mb-4">
+            <img src="https://source.unsplash.com/400x300/?about,person" alt="Admin" class="rounded-circle" width="80" height="80">
+            <div class="mt-2 text-white">مرحباً، <strong>{{ current_user.username }}</strong></div>
+          </div>
+          <hr class="border-gray-700">
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>لوحة التحكم</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_content') }}">
+              <i class="fas fa-edit"></i>
+              <span>إدارة المحتوى</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_service_content') }}">
+              <i class="fas fa-briefcase"></i>
+              <span>إدارة الخدمات</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('admin_testimonials') }}">
+              <i class="fas fa-comments"></i>
+              <span>آراء العملاء</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_profile') }}">
+              <i class="fas fa-user-cog"></i>
+              <span>الملف الشخصي</span>
+            </a>
+          </li>
+          <li class="nav-item mt-4">
+            <a class="nav-link text-danger" href="{{ url_for('admin_logout') }}">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>تسجيل الخروج</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
+        <!-- Top navbar -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom admin-header">
+          <h1 class="h2">إدارة آراء العملاء</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="/" class="btn btn-sm btn-outline-primary me-2">
+              <i class="fas fa-eye"></i> عرض الموقع
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.reload()">
+              <i class="fas fa-sync-alt"></i> تحديث
+            </button>
+          </div>
+        </div>
+        
+        <!-- Alert container -->
+        <div class="alert-container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        
+        <!-- Filter and statistics -->
+        <div class="content-card mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="card-title mb-0">
+              <i class="fas fa-filter me-2"></i>
+              فلترة التقييمات
+            </h5>
+            <div class="d-flex">
+              <button class="btn btn-sm filter-btn active me-2" data-filter="all">
+                الكل 
+                <span class="badge bg-dark ms-1">{{ testimonials|length }}</span>
+              </button>
+              <button class="btn btn-sm filter-btn me-2" data-filter="pending">
+                بانتظار المراجعة 
+                <span class="badge bg-warning text-dark ms-1">{{ testimonials|selectattr('approved', 'equalto', false)|list|length }}</span>
+              </button>
+              <button class="btn btn-sm filter-btn" data-filter="approved">
+                معتمدة 
+                <span class="badge bg-success ms-1">{{ testimonials|selectattr('approved', 'equalto', true)|list|length }}</span>
+              </button>
+            </div>
+          </div>
+          
+          <div class="row g-3">
+            <div class="col-md-4">
+              <div class="input-group">
+                <span class="input-group-text"><i class="fas fa-search"></i></span>
+                <input type="text" class="form-control" id="searchInput" placeholder="بحث في التقييمات...">
+              </div>
+            </div>
+            <div class="col-md-3">
+              <select class="form-select" id="sortSelect">
+                <option value="date-desc">الأحدث أولاً</option>
+                <option value="date-asc">الأقدم أولاً</option>
+                <option value="rating-desc">التقييم: من الأعلى للأقل</option>
+                <option value="rating-asc">التقييم: من الأقل للأعلى</option>
+              </select>
+            </div>
+            <div class="col-md-5 text-md-end">
+              <div class="text-muted">
+                <i class="fas fa-chart-bar me-1"></i>
+                متوسط التقييم: 
+                <span class="text-warning fw-bold">
+                  {% set avg_rating = (testimonials|sum(attribute='rating') / testimonials|length) if testimonials|length > 0 else 0 %}
+                  {{ "%.1f"|format(avg_rating) }}
+                  <i class="fas fa-star small"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Testimonials list -->
+        <div class="testimonials-container">
+          <div class="row row-cols-1 row-cols-md-2 g-4" id="testimonialsGrid">
+            {% for testimonial in testimonials %}
+              <div class="col testimonial-item" 
+                   data-approved="{{ testimonial.approved|lower }}"
+                   data-rating="{{ testimonial.rating }}"
+                   data-date="{{ testimonial.created_at.strftime('%Y-%m-%d') }}">
+                <div class="testimonial-card bg-dark p-4 rounded {{ 'testimonial-pending' if not testimonial.approved else 'testimonial-approved' }}">
+                  <div class="d-flex justify-content-between align-items-start mb-3">
+                    <div>
+                      <h5 class="mb-1">{{ testimonial.name }}</h5>
+                      {% if testimonial.company %}
+                        <p class="text-muted small mb-0">{{ testimonial.company }}</p>
+                      {% endif %}
+                    </div>
+                    <div class="status {{ 'pending' if not testimonial.approved else 'approved' }}">
+                      {% if not testimonial.approved %}
+                        <span class="badge bg-warning text-dark">بانتظار المراجعة</span>
+                      {% else %}
+                        <span class="badge bg-success">معتمد</span>
+                      {% endif %}
+                    </div>
+                  </div>
+                  
+                  <div class="rating mb-2">
+                    {% for i in range(1, 6) %}
+                      {% if i <= testimonial.rating %}
+                        <i class="fas fa-star rating-star"></i>
+                      {% else %}
+                        <i class="far fa-star rating-star text-muted"></i>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  
+                  <p class="content text-gray-300 mb-3">{{ testimonial.content }}</p>
+                  
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="date text-muted small">
+                      <i class="far fa-clock me-1"></i>
+                      {{ testimonial.created_at.strftime('%Y-%m-%d') }}
+                    </div>
+                    
+                    <div class="actions">
+                      {% if not testimonial.approved %}
+                        <form method="POST" action="{{ url_for('approve_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                          <button type="submit" class="btn btn-sm btn-success">
+                            <i class="fas fa-check me-1"></i> اعتماد
+                          </button>
+                        </form>
+                      {% endif %}
+                      
+                      <form method="POST" action="{{ url_for('delete_testimonial', testimonial_id=testimonial.id) }}" class="d-inline">
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا التقييم؟')">
+                          <i class="fas fa-trash me-1"></i> حذف
+                        </button>
+                      </form>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% else %}
+              <div class="col-12">
+                <div class="alert alert-info text-center">
+                  <i class="fas fa-info-circle me-2"></i>
+                  لا توجد تقييمات حتى الآن
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        
+        <!-- Empty state -->
+        <div id="emptyState" class="text-center py-5 d-none">
+          <div class="mb-3">
+            <i class="fas fa-search fa-3x text-muted"></i>
+          </div>
+          <h4>لم يتم العثور على نتائج</h4>
+          <p class="text-muted">حاول تغيير معايير البحث أو الفلترة</p>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/admin.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Filter buttons
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const testimonialItems = document.querySelectorAll('.testimonial-item');
+      const testimonialsGrid = document.getElementById('testimonialsGrid');
+      const emptyState = document.getElementById('emptyState');
+      const searchInput = document.getElementById('searchInput');
+      const sortSelect = document.getElementById('sortSelect');
+      
+      // Apply filters and search
+      function applyFilters() {
+        const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+        const searchTerm = searchInput.value.toLowerCase();
+        const sortValue = sortSelect.value;
+        
+        // First collect all items that match the criteria
+        let visibleItems = [];
+        let hiddenItems = [];
+        
+        testimonialItems.forEach(item => {
+          // Check filter
+          const approved = item.dataset.approved;
+          let matchesFilter = (
+            activeFilter === 'all' || 
+            (activeFilter === 'pending' && approved === 'false') ||
+            (activeFilter === 'approved' && approved === 'true')
+          );
+          
+          // Check search term
+          const content = item.querySelector('.content').textContent.toLowerCase();
+          const name = item.querySelector('h5').textContent.toLowerCase();
+          const company = item.querySelector('.text-muted') ? 
+                        item.querySelector('.text-muted').textContent.toLowerCase() : '';
+          
+          let matchesSearch = (
+            content.includes(searchTerm) || 
+            name.includes(searchTerm) || 
+            company.includes(searchTerm)
+          );
+          
+          if (matchesFilter && matchesSearch) {
+            visibleItems.push(item);
+          } else {
+            hiddenItems.push(item);
+          }
+        });
+        
+        // Sort visible items
+        visibleItems.sort((a, b) => {
+          if (sortValue === 'date-desc') {
+            return new Date(b.dataset.date) - new Date(a.dataset.date);
+          } else if (sortValue === 'date-asc') {
+            return new Date(a.dataset.date) - new Date(b.dataset.date);
+          } else if (sortValue === 'rating-desc') {
+            return parseInt(b.dataset.rating) - parseInt(a.dataset.rating);
+          } else if (sortValue === 'rating-asc') {
+            return parseInt(a.dataset.rating) - parseInt(b.dataset.rating);
+          }
+        });
+        
+        // Show/hide items
+        hiddenItems.forEach(item => {
+          item.classList.add('d-none');
+        });
+        
+        if (visibleItems.length === 0) {
+          emptyState.classList.remove('d-none');
+        } else {
+          emptyState.classList.add('d-none');
+          
+          // Reorder items based on sort
+          visibleItems.forEach(item => {
+            item.classList.remove('d-none');
+            testimonialsGrid.appendChild(item);
+          });
+        }
+      }
+      
+      // Filter button click handler
+      filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          filterButtons.forEach(btn => btn.classList.remove('active'));
+          this.classList.add('active');
+          applyFilters();
+        });
+      });
+      
+      // Search input handler
+      searchInput.addEventListener('input', applyFilters);
+      
+      // Sort select handler
+      sortSelect.addEventListener('change', applyFilters);
+      
+      // Initial filter application
+      applyFilters();
+    });
+  </script>
+</body>
+</html>

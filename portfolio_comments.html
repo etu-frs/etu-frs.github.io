@@ -1,0 +1,120 @@
+{% extends 'admin/dashboard.html' %}
+
+{% block admin_content %}
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-12">
+            <h1 class="mb-4 text-primary">إدارة تعليقات معرض الأعمال</h1>
+            
+            <!-- Pending Comments -->
+            <div class="card mb-5">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0">تعليقات بانتظار الموافقة ({{ pending_comments|length }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if pending_comments %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>التعليق</th>
+                                    <th>العمل</th>
+                                    <th>التاريخ</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comment in pending_comments %}
+                                <tr>
+                                    <td>{{ comment.name }}</td>
+                                    <td>{{ comment.email or 'غير محدد' }}</td>
+                                    <td>{{ comment.content|truncate(50) }}</td>
+                                    <td>
+                                        <a href="/portfolio/{{ comment.portfolio_item.id }}" target="_blank">
+                                            {{ comment.portfolio_item.title|truncate(30) }}
+                                        </a>
+                                    </td>
+                                    <td>{{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        <div class="btn-group" role="group">
+                                            <form action="{{ url_for('approve_portfolio_comment', comment_id=comment.id) }}" method="post" class="d-inline">
+                                                <button type="submit" class="btn btn-sm btn-success" onclick="return confirm('هل أنت متأكد من الموافقة على هذا التعليق؟')">
+                                                    <i class="bi bi-check-circle"></i> موافقة
+                                                </button>
+                                            </form>
+                                            <form action="{{ url_for('delete_portfolio_comment', comment_id=comment.id) }}" method="post" class="d-inline ms-1">
+                                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا التعليق؟ لا يمكن التراجع عن هذا الإجراء.')">
+                                                    <i class="bi bi-trash"></i> حذف
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        لا توجد تعليقات بانتظار الموافقة حالياً.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Approved Comments -->
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">التعليقات المعتمدة (آخر {{ approved_comments|length }})</h5>
+                </div>
+                <div class="card-body">
+                    {% if approved_comments %}
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>الاسم</th>
+                                    <th>البريد الإلكتروني</th>
+                                    <th>التعليق</th>
+                                    <th>العمل</th>
+                                    <th>التاريخ</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for comment in approved_comments %}
+                                <tr>
+                                    <td>{{ comment.name }}</td>
+                                    <td>{{ comment.email or 'غير محدد' }}</td>
+                                    <td>{{ comment.content|truncate(50) }}</td>
+                                    <td>
+                                        <a href="/portfolio/{{ comment.portfolio_item.id }}" target="_blank">
+                                            {{ comment.portfolio_item.title|truncate(30) }}
+                                        </a>
+                                    </td>
+                                    <td>{{ comment.created_at.strftime('%Y-%m-%d %H:%M') }}</td>
+                                    <td>
+                                        <form action="{{ url_for('delete_portfolio_comment', comment_id=comment.id) }}" method="post" class="d-inline">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('هل أنت متأكد من حذف هذا التعليق؟ لا يمكن التراجع عن هذا الإجراء.')">
+                                                <i class="bi bi-trash"></i> حذف
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% else %}
+                    <div class="alert alert-info">
+                        لا توجد تعليقات معتمدة حالياً.
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

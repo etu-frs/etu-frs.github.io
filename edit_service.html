@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تعديل صفحة الخدمة - لوحة الإدارة</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <style>
+    .content-card {
+      background-color: #2c3034;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+    
+    .card-title {
+      margin-bottom: 0;
+    }
+    
+    .form-section {
+      border: 1px solid #2c3034;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #212529;
+    }
+    
+    .form-section-title {
+      background-color: #212529;
+      padding: 10px 15px;
+      margin: -20px -20px 20px -20px;
+      border-radius: 10px 10px 0 0;
+      border-bottom: 2px solid #2c3034;
+    }
+    
+    .feature-item, .package-item, .related-item, .gallery-item {
+      background-color: #2c3034;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .add-item-btn {
+      width: 100%;
+      border: 2px dashed #2c3034;
+      background-color: transparent;
+      color: #adb5bd;
+      padding: 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .add-item-btn:hover {
+      background-color: #2c3034;
+      color: #fff;
+    }
+    
+    .item-text {
+      flex-grow: 1;
+    }
+    
+    .item-controls {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .image-preview {
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+      height: 150px;
+      margin-bottom: 15px;
+    }
+    
+    .image-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    
+    .image-preview .image-actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 5px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .image-preview:hover .image-actions {
+      opacity: 1;
+    }
+    
+    .preview-container {
+      display: flex;
+      flex-direction: column;
+      margin-top: 20px;
+      border: 1px solid #2c3034;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    
+    .preview-header {
+      background-color: #212529;
+      padding: 10px 15px;
+      border-bottom: 1px solid #2c3034;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .preview-iframe {
+      width: 100%;
+      height: 600px;
+      border: none;
+      background-color: #fff;
+    }
+  </style>
+</head>
+<body class="bg-dark text-white">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+        <div class="position-sticky pt-3">
+          <!-- Admin Sidebar -->
+          <div class="admin-sidebar">
+            <div class="admin-sidebar-header">
+              <div class="admin-logo">
+                <i class="fas fa-user-shield"></i>
+              </div>
+              <h2>لوحة الإدارة</h2>
+            </div>
+            
+            <p class="admin-sidebar-desc">مرحباً بك في لوحة التحكم</p>
+            
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>لوحة التحكم</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('admin_content') }}">
+                  <i class="fas fa-edit"></i>
+                  <span>إدارة المحتوى</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_testimonials') }}">
+                  <i class="fas fa-comments"></i>
+                  <span>آراء العملاء</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_profile') }}">
+                  <i class="fas fa-user-cog"></i>
+                  <span>الملف الشخصي</span>
+                </a>
+              </li>
+              <li class="nav-item mt-4">
+                <a class="nav-link text-danger" href="{{ url_for('admin_logout') }}">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>تسجيل الخروج</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
+        <!-- Top navbar -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom admin-header">
+          <h1 class="h2">تعديل صفحة: {{ service.title }}</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="/service/{{ service_type }}" class="btn btn-sm btn-outline-primary me-2" target="_blank">
+              <i class="fas fa-eye"></i> معاينة الصفحة
+            </a>
+            <a href="{{ url_for('admin_service_content') }}" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-arrow-right"></i> العودة للخدمات
+            </a>
+          </div>
+        </div>
+        
+        <!-- Alert container -->
+        <div class="alert-container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        
+        <!-- Service Edit Form -->
+        <form id="serviceEditForm" action="{{ url_for('update_service', service_type=service_type) }}" method="post" enctype="multipart/form-data">
+          <div class="row">
+            <div class="col-lg-8">
+              <!-- Basic Information Section -->
+              <div class="form-section">
+                <div class="form-section-title">
+                  <h4><i class="fas fa-info-circle me-2"></i> المعلومات الأساسية</h4>
+                </div>
+                
+                <div class="row g-3">
+                  <div class="col-md-6">
+                    <label for="title" class="form-label">عنوان الخدمة <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control bg-darker" id="title" name="title" value="{{ service.title }}" required>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="subtitle" class="form-label">العنوان الفرعي</label>
+                    <input type="text" class="form-control bg-darker" id="subtitle" name="subtitle" value="{{ service.subtitle }}">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="price" class="form-label">السعر <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control bg-darker" id="price" name="price" value="{{ service.price }}" required>
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="delivery_time" class="form-label">مدة التسليم</label>
+                    <input type="text" class="form-control bg-darker" id="delivery_time" name="delivery_time" value="{{ service.delivery_time }}">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="revisions" class="form-label">عدد التعديلات</label>
+                    <input type="text" class="form-control bg-darker" id="revisions" name="revisions" value="{{ service.revisions }}">
+                  </div>
+                  
+                  <div class="col-md-6">
+                    <label for="formats" class="form-label">التنسيقات المتاحة</label>
+                    <input type="text" class="form-control bg-darker" id="formats" name="formats" value="{{ service.formats }}">
+                  </div>
+                  
+                  <div class="col-12">
+                    <label for="description" class="form-label">وصف الخدمة <span class="text-danger">*</span></label>
+                    <textarea class="form-control bg-darker" id="description" name="description" rows="5" required>{{ service.description }}</textarea>
+                    <div class="form-text text-muted">يمكنك استخدام HTML لتنسيق النص</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Features Section -->
+              <div class="form-section">
+                <div class="form-section-title">
+                  <h4><i class="fas fa-list-ul me-2"></i> مميزات الخدمة</h4>
+                </div>
+                
+                <div id="featuresContainer">
+                  {% for feature in service.features %}
+                    <div class="feature-item">
+                      <div class="item-text">{{ feature }}</div>
+                      <div class="item-controls">
+                        <button type="button" class="btn btn-sm btn-outline-warning edit-feature" data-feature="{{ feature }}">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-feature">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      <input type="hidden" name="features[]" value="{{ feature }}">
+                    </div>
+                  {% endfor %}
+                </div>
+                
+                <button type="button" class="add-item-btn mt-3" id="addFeatureBtn">
+                  <i class="fas fa-plus-circle me-1"></i> إضافة ميزة جديدة
+                </button>
+              </div>
+              
+              <!-- Package Includes Section -->
+              <div class="form-section">
+                <div class="form-section-title">
+                  <h4><i class="fas fa-box-open me-2"></i> الباقة تشمل</h4>
+                </div>
+                
+                <div id="packageIncludesContainer">
+                  {% for item in service.package_includes %}
+                    <div class="package-item">
+                      <div class="item-text">{{ item }}</div>
+                      <div class="item-controls">
+                        <button type="button" class="btn btn-sm btn-outline-warning edit-package-item" data-item="{{ item }}">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-package-item">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      <input type="hidden" name="package_includes[]" value="{{ item }}">
+                    </div>
+                  {% endfor %}
+                </div>
+                
+                <button type="button" class="add-item-btn mt-3" id="addPackageItemBtn">
+                  <i class="fas fa-plus-circle me-1"></i> إضافة عنصر جديد للباقة
+                </button>
+              </div>
+              
+              <!-- Related Services Section -->
+              <div class="form-section">
+                <div class="form-section-title">
+                  <h4><i class="fas fa-link me-2"></i> خدمات ذات صلة</h4>
+                </div>
+                
+                <div id="relatedServicesContainer">
+                  {% for related in service.related_services %}
+                    <div class="related-item">
+                      <div class="item-text">
+                        <strong>{{ related.title }}</strong><br>
+                        <small class="text-muted">{{ related.short_desc }}</small>
+                      </div>
+                      <div class="item-controls">
+                        <button type="button" class="btn btn-sm btn-outline-warning edit-related-service" 
+                                data-title="{{ related.title }}" 
+                                data-desc="{{ related.short_desc }}" 
+                                data-url="{{ related.url }}">
+                          <i class="fas fa-edit"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-outline-danger remove-related-service">
+                          <i class="fas fa-trash"></i>
+                        </button>
+                      </div>
+                      <input type="hidden" name="related_titles[]" value="{{ related.title }}">
+                      <input type="hidden" name="related_descs[]" value="{{ related.short_desc }}">
+                      <input type="hidden" name="related_urls[]" value="{{ related.url }}">
+                    </div>
+                  {% endfor %}
+                </div>
+                
+                <button type="button" class="add-item-btn mt-3" id="addRelatedServiceBtn">
+                  <i class="fas fa-plus-circle me-1"></i> إضافة خدمة ذات صلة
+                </button>
+              </div>
+              
+              <!-- Submit Buttons -->
+              <div class="d-flex justify-content-between my-4">
+                <a href="{{ url_for('admin_service_content') }}" class="btn btn-secondary">
+                  <i class="fas fa-times me-1"></i> إلغاء
+                </a>
+                <button type="submit" class="btn btn-primary">
+                  <i class="fas fa-save me-1"></i> حفظ التغييرات
+                </button>
+              </div>
+            </div>
+            
+            <div class="col-lg-4">
+              <!-- Images Section -->
+              <div class="form-section">
+                <div class="form-section-title">
+                  <h4><i class="fas fa-images me-2"></i> الصور</h4>
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">الصورة الرئيسية</label>
+                  <div class="image-preview">
+                    <img src="{{ service.image_url }}" alt="{{ service.title }}">
+                    <div class="image-actions">
+                      <button type="button" class="btn btn-sm btn-primary" id="changeFeaturedImage">
+                        <i class="fas fa-exchange-alt"></i> تغيير
+                      </button>
+                    </div>
+                  </div>
+                  <input type="file" id="featuredImageInput" name="featured_image" class="form-control d-none">
+                </div>
+                
+                <div class="mb-3">
+                  <label class="form-label">معرض الأعمال</label>
+                  <div class="row g-2">
+                    {% for item in service.gallery %}
+                      <div class="col-md-6">
+                        <div class="image-preview">
+                          <img src="{{ item.image }}" alt="{{ item.caption }}">
+                          <div class="image-actions">
+                            <button type="button" class="btn btn-sm btn-warning edit-gallery-item" data-caption="{{ item.caption }}">
+                              <i class="fas fa-edit"></i>
+                            </button>
+                            <button type="button" class="btn btn-sm btn-danger remove-gallery-item">
+                              <i class="fas fa-trash"></i>
+                            </button>
+                          </div>
+                          <input type="hidden" name="gallery_images[]" value="{{ item.image }}">
+                          <input type="hidden" name="gallery_captions[]" value="{{ item.caption }}">
+                        </div>
+                      </div>
+                    {% endfor %}
+                  </div>
+                  
+                  <button type="button" class="btn btn-outline-primary w-100 mt-3" id="addGalleryItemBtn">
+                    <i class="fas fa-plus-circle me-1"></i> إضافة صورة للمعرض
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Preview Section -->
+              <div class="form-section">
+                <div class="form-section-title">
+                  <h4><i class="fas fa-eye me-2"></i> معاينة سريعة</h4>
+                </div>
+                
+                <div class="d-grid gap-2">
+                  <a href="/service/{{ service_type }}" class="btn btn-primary" target="_blank">
+                    <i class="fas fa-external-link-alt me-1"></i> فتح الصفحة في نافذة جديدة
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </main>
+    </div>
+  </div>
+  
+  <!-- Feature Modal -->
+  <div class="modal fade" id="featureModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="featureModalTitle">إضافة ميزة جديدة</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="featureText" class="form-label">وصف الميزة</label>
+            <input type="text" class="form-control bg-darker" id="featureText">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="saveFeatureBtn">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Package Item Modal -->
+  <div class="modal fade" id="packageItemModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="packageItemModalTitle">إضافة عنصر جديد للباقة</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="packageItemText" class="form-label">وصف العنصر</label>
+            <input type="text" class="form-control bg-darker" id="packageItemText">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="savePackageItemBtn">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Related Service Modal -->
+  <div class="modal fade" id="relatedServiceModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="relatedServiceModalTitle">إضافة خدمة ذات صلة</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="relatedServiceTitle" class="form-label">عنوان الخدمة</label>
+            <input type="text" class="form-control bg-darker" id="relatedServiceTitle">
+          </div>
+          <div class="mb-3">
+            <label for="relatedServiceDesc" class="form-label">وصف مختصر</label>
+            <input type="text" class="form-control bg-darker" id="relatedServiceDesc">
+          </div>
+          <div class="mb-3">
+            <label for="relatedServiceUrl" class="form-label">رابط الخدمة</label>
+            <input type="text" class="form-control bg-darker" id="relatedServiceUrl" placeholder="/service/service-type">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="saveRelatedServiceBtn">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Gallery Item Modal -->
+  <div class="modal fade" id="galleryItemModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="galleryItemModalTitle">إضافة صورة للمعرض</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label for="galleryItemImage" class="form-label">الصورة</label>
+            <input type="file" class="form-control bg-darker" id="galleryItemImage">
+          </div>
+          <div class="mb-3">
+            <label for="galleryItemCaption" class="form-label">التسمية التوضيحية</label>
+            <input type="text" class="form-control bg-darker" id="galleryItemCaption">
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+          <button type="button" class="btn btn-primary" id="saveGalleryItemBtn">حفظ</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+  <script src="/static/js/admin.js"></script>
+  <script>
+    // Initialize TinyMCE
+    tinymce.init({
+      selector: '#description',
+      directionality: 'rtl',
+      plugins: 'advlist autolink lists link image charmap print preview anchor',
+      toolbar: 'undo redo | formatselect | bold italic | alignleft aligncenter alignright | bullist numlist | link',
+      height: 300,
+      skin: 'oxide-dark',
+      content_css: 'dark'
+    });
+    
+    // Initialize modals
+    const featureModal = new bootstrap.Modal(document.getElementById('featureModal'));
+    const packageItemModal = new bootstrap.Modal(document.getElementById('packageItemModal'));
+    const relatedServiceModal = new bootstrap.Modal(document.getElementById('relatedServiceModal'));
+    const galleryItemModal = new bootstrap.Modal(document.getElementById('galleryItemModal'));
+    
+    let currentEditingItem = null;
+    
+    // Feature functions
+    document.getElementById('addFeatureBtn').addEventListener('click', function() {
+      document.getElementById('featureModalTitle').textContent = 'إضافة ميزة جديدة';
+      document.getElementById('featureText').value = '';
+      currentEditingItem = null;
+      featureModal.show();
+    });
+    
+    document.querySelectorAll('.edit-feature').forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('featureModalTitle').textContent = 'تعديل الميزة';
+        document.getElementById('featureText').value = this.dataset.feature;
+        currentEditingItem = this.closest('.feature-item');
+        featureModal.show();
+      });
+    });
+    
+    document.querySelectorAll('.remove-feature').forEach(button => {
+      button.addEventListener('click', function() {
+        if(confirm('هل أنت متأكد من حذف هذه الميزة؟')) {
+          this.closest('.feature-item').remove();
+        }
+      });
+    });
+    
+    document.getElementById('saveFeatureBtn').addEventListener('click', function() {
+      const featureText = document.getElementById('featureText').value.trim();
+      if(featureText) {
+        if(currentEditingItem) {
+          // Update existing feature
+          currentEditingItem.querySelector('.item-text').textContent = featureText;
+          currentEditingItem.querySelector('input[name="features[]"]').value = featureText;
+          currentEditingItem.querySelector('.edit-feature').dataset.feature = featureText;
+        } else {
+          // Add new feature
+          const newFeature = document.createElement('div');
+          newFeature.className = 'feature-item';
+          newFeature.innerHTML = `
+            <div class="item-text">${featureText}</div>
+            <div class="item-controls">
+              <button type="button" class="btn btn-sm btn-outline-warning edit-feature" data-feature="${featureText}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger remove-feature">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <input type="hidden" name="features[]" value="${featureText}">
+          `;
+          document.getElementById('featuresContainer').appendChild(newFeature);
+          
+          // Add event listeners to new buttons
+          newFeature.querySelector('.edit-feature').addEventListener('click', function() {
+            document.getElementById('featureModalTitle').textContent = 'تعديل الميزة';
+            document.getElementById('featureText').value = this.dataset.feature;
+            currentEditingItem = this.closest('.feature-item');
+            featureModal.show();
+          });
+          
+          newFeature.querySelector('.remove-feature').addEventListener('click', function() {
+            if(confirm('هل أنت متأكد من حذف هذه الميزة؟')) {
+              this.closest('.feature-item').remove();
+            }
+          });
+        }
+        featureModal.hide();
+      }
+    });
+    
+    // Package Item functions
+    document.getElementById('addPackageItemBtn').addEventListener('click', function() {
+      document.getElementById('packageItemModalTitle').textContent = 'إضافة عنصر جديد للباقة';
+      document.getElementById('packageItemText').value = '';
+      currentEditingItem = null;
+      packageItemModal.show();
+    });
+    
+    document.querySelectorAll('.edit-package-item').forEach(button => {
+      button.addEventListener('click', function() {
+        document.getElementById('packageItemModalTitle').textContent = 'تعديل عنصر الباقة';
+        document.getElementById('packageItemText').value = this.dataset.item;
+        currentEditingItem = this.closest('.package-item');
+        packageItemModal.show();
+      });
+    });
+    
+    document.querySelectorAll('.remove-package-item').forEach(button => {
+      button.addEventListener('click', function() {
+        if(confirm('هل أنت متأكد من حذف هذا العنصر؟')) {
+          this.closest('.package-item').remove();
+        }
+      });
+    });
+    
+    document.getElementById('savePackageItemBtn').addEventListener('click', function() {
+      const itemText = document.getElementById('packageItemText').value.trim();
+      if(itemText) {
+        if(currentEditingItem) {
+          // Update existing item
+          currentEditingItem.querySelector('.item-text').textContent = itemText;
+          currentEditingItem.querySelector('input[name="package_includes[]"]').value = itemText;
+          currentEditingItem.querySelector('.edit-package-item').dataset.item = itemText;
+        } else {
+          // Add new item
+          const newItem = document.createElement('div');
+          newItem.className = 'package-item';
+          newItem.innerHTML = `
+            <div class="item-text">${itemText}</div>
+            <div class="item-controls">
+              <button type="button" class="btn btn-sm btn-outline-warning edit-package-item" data-item="${itemText}">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-danger remove-package-item">
+                <i class="fas fa-trash"></i>
+              </button>
+            </div>
+            <input type="hidden" name="package_includes[]" value="${itemText}">
+          `;
+          document.getElementById('packageIncludesContainer').appendChild(newItem);
+          
+          // Add event listeners to new buttons
+          newItem.querySelector('.edit-package-item').addEventListener('click', function() {
+            document.getElementById('packageItemModalTitle').textContent = 'تعديل عنصر الباقة';
+            document.getElementById('packageItemText').value = this.dataset.item;
+            currentEditingItem = this.closest('.package-item');
+            packageItemModal.show();
+          });
+          
+          newItem.querySelector('.remove-package-item').addEventListener('click', function() {
+            if(confirm('هل أنت متأكد من حذف هذا العنصر؟')) {
+              this.closest('.package-item').remove();
+            }
+          });
+        }
+        packageItemModal.hide();
+      }
+    });
+
+    // Similar functions for Related Services and Gallery Items...
+    
+    // Featured image change
+    document.getElementById('changeFeaturedImage').addEventListener('click', function() {
+      document.getElementById('featuredImageInput').click();
+    });
+    
+    document.getElementById('featuredImageInput').addEventListener('change', function() {
+      if(this.files && this.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          document.querySelector('.image-preview img').src = e.target.result;
+        };
+        reader.readAsDataURL(this.files[0]);
+      }
+    });
+  </script>
+</body>
+</html>

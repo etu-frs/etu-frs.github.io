@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>لوحة الإدارة - موقع فراس</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+      background-color: #1a1a1a;
+      color: #fff;
+      direction: rtl;
+    }
+  </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 d-md-block admin-sidebar collapse">
+        <div class="pt-4 pb-2 px-3">
+          <h3 class="text-yellow-400 text-center mb-4">لوحة الإدارة</h3>
+          <div class="text-center mb-4">
+            <img src="https://source.unsplash.com/400x300/?about,person" alt="Admin" class="rounded-circle" width="80" height="80">
+            <div class="mt-2 text-white">مرحباً، <strong>{{ current_user.username }}</strong></div>
+          </div>
+          <hr class="border-gray-700">
+        </div>
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="{{ url_for('admin_dashboard') }}">
+              <i class="fas fa-tachometer-alt"></i>
+              <span>لوحة التحكم</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_content') }}">
+              <i class="fas fa-edit"></i>
+              <span>إدارة المحتوى</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_service_content') }}">
+              <i class="fas fa-briefcase"></i>
+              <span>إدارة الخدمات</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_testimonials') }}">
+              <i class="fas fa-comments"></i>
+              <span>التقييمات والآراء</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_portfolio_comments') }}">
+              <i class="fas fa-comment-alt"></i>
+              <span>تعليقات معرض الأعمال</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('admin_profile') }}">
+              <i class="fas fa-user-cog"></i>
+              <span>الملف الشخصي</span>
+            </a>
+          </li>
+          <li class="nav-item mt-4">
+            <a class="nav-link text-danger" href="{{ url_for('admin_logout') }}">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>تسجيل الخروج</span>
+            </a>
+          </li>
+        </ul>
+      </div>
+      
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
+        <!-- Top navbar -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom admin-header">
+          <h1 class="h2">لوحة التحكم</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="/" class="btn btn-sm btn-outline-primary me-2">
+              <i class="fas fa-eye"></i> عرض الموقع
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-secondary">
+              <i class="fas fa-sync-alt"></i> تحديث
+            </button>
+          </div>
+        </div>
+        
+        <!-- Alert container -->
+        <div class="alert-container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        
+        <!-- Stats cards -->
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-5 g-4 mb-5">
+          <div class="col">
+            <div class="stats-card text-center">
+              <div class="icon">
+                <i class="fas fa-layer-group"></i>
+              </div>
+              <div class="number">{{ sections_count }}</div>
+              <div class="label">الأقسام</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="stats-card text-center">
+              <div class="icon">
+                <i class="fas fa-file-alt"></i>
+              </div>
+              <div class="number">{{ contents_count }}</div>
+              <div class="label">عناصر المحتوى</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="stats-card text-center">
+              <div class="icon">
+                <i class="fas fa-comments"></i>
+              </div>
+              <div class="number">{{ testimonials_count }}</div>
+              <div class="label">التقييمات</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="stats-card text-center">
+              <div class="icon">
+                <i class="fas fa-clock"></i>
+              </div>
+              <div class="number">{{ pending_testimonials }}</div>
+              <div class="label">تقييمات في الانتظار</div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="stats-card text-center">
+              <div class="icon">
+                <i class="fas fa-comment-alt"></i>
+              </div>
+              <div class="number">{{ pending_portfolio_comments }}</div>
+              <div class="label">تعليقات في الانتظار</div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Recent activity and quick actions -->
+        <div class="row">
+          <div class="col-md-7 mb-4">
+            <div class="content-card">
+              <h5 class="card-title">
+                <i class="fas fa-history me-2"></i>
+                النشاط الأخير
+              </h5>
+              <div class="bg-darker p-3 rounded">
+                {% if pending_portfolio_comments %}
+                <div class="activity-item d-flex align-items-start mb-3">
+                  <div class="activity-icon bg-info text-white rounded-circle p-2 me-3">
+                    <i class="fas fa-comment-alt"></i>
+                  </div>
+                  <div>
+                    <div class="activity-title">تعليقات جديدة على معرض الأعمال</div>
+                    <div class="text-muted small">{{ pending_portfolio_comments }} تعليق في انتظار الموافقة</div>
+                  </div>
+                </div>
+                {% endif %}
+                
+                {% if testimonials_count > 0 %}
+                <div class="activity-item d-flex align-items-start mb-3">
+                  <div class="activity-icon bg-warning text-white rounded-circle p-2 me-3">
+                    <i class="fas fa-comment-alt"></i>
+                  </div>
+                  <div>
+                    <div class="activity-title">تم إضافة تقييم جديد</div>
+                    <div class="text-muted small">منذ {{ (testimonials_count > 1) and testimonials_count|string + ' دقائق' or 'دقيقة واحدة' }}</div>
+                  </div>
+                </div>
+                {% endif %}
+                
+                <div class="activity-item d-flex align-items-start mb-3">
+                  <div class="activity-icon bg-success text-white rounded-circle p-2 me-3">
+                    <i class="fas fa-user"></i>
+                  </div>
+                  <div>
+                    <div class="activity-title">تم تسجيل الدخول إلى لوحة التحكم</div>
+                    <div class="text-muted small">منذ دقائق</div>
+                  </div>
+                </div>
+                
+                <div class="activity-item d-flex align-items-start">
+                  <div class="activity-icon bg-info text-white rounded-circle p-2 me-3">
+                    <i class="fas fa-server"></i>
+                  </div>
+                  <div>
+                    <div class="activity-title">تم تحديث النظام</div>
+                    <div class="text-muted small">منذ ساعة</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-5 mb-4">
+            <div class="content-card">
+              <h5 class="card-title">
+                <i class="fas fa-bolt me-2"></i>
+                إجراءات سريعة
+              </h5>
+              <div class="d-grid gap-2">
+                <a href="{{ url_for('admin_content') }}" class="btn btn-outline-light d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-edit me-2"></i> تعديل محتوى الموقع</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="{{ url_for('admin_testimonials') }}" class="btn btn-outline-light d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-comments me-2"></i> مراجعة التقييمات</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                {% if pending_testimonials > 0 %}
+                <a href="{{ url_for('admin_testimonials') }}" class="btn btn-warning d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-exclamation-circle me-2"></i> {{ pending_testimonials }} تقييمات بانتظار المراجعة</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('admin_portfolio_comments') }}" class="btn btn-outline-light d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-comment-alt me-2"></i> مراجعة تعليقات معرض الأعمال</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                {% if pending_portfolio_comments > 0 %}
+                <a href="{{ url_for('admin_portfolio_comments') }}" class="btn btn-info d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-exclamation-circle me-2"></i> {{ pending_portfolio_comments }} تعليقات بانتظار المراجعة</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                {% endif %}
+                <a href="{{ url_for('admin_profile') }}" class="btn btn-outline-light d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-user-cog me-2"></i> إعدادات الحساب</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+                <a href="/" class="btn btn-outline-primary d-flex justify-content-between align-items-center">
+                  <span><i class="fas fa-eye me-2"></i> معاينة الموقع</span>
+                  <i class="fas fa-chevron-left"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Website tips -->
+        <div class="content-card mb-4">
+          <h5 class="card-title">
+            <i class="fas fa-lightbulb me-2"></i>
+            نصائح لتحسين موقعك
+          </h5>
+          <div class="row">
+            <div class="col-md-4 mb-3">
+              <div class="bg-dark p-3 rounded h-100">
+                <h6 class="text-warning"><i class="fas fa-image me-2"></i> الصور</h6>
+                <p class="text-muted small">استخدم صوراً عالية الجودة لإظهار أعمالك بشكل احترافي. تأكد من أن الصور ذات أبعاد متناسقة.</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="bg-dark p-3 rounded h-100">
+                <h6 class="text-warning"><i class="fas fa-file-alt me-2"></i> المحتوى</h6>
+                <p class="text-muted small">اكتب محتوى واضحاً ومختصراً يبرز مهاراتك وخبراتك. تجنب الأخطاء الإملائية والنحوية.</p>
+              </div>
+            </div>
+            <div class="col-md-4 mb-3">
+              <div class="bg-dark p-3 rounded h-100">
+                <h6 class="text-warning"><i class="fas fa-comments me-2"></i> التقييمات</h6>
+                <p class="text-muted small">شجع عملاءك على ترك تقييمات إيجابية. قم بالرد على التقييمات السلبية بطريقة احترافية.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

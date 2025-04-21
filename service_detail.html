@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ service.title_en }} - Firas Design</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <script src="/static/js/admin.js" defer></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    .hero-gradient {
+      background: linear-gradient(to bottom, #111827, #1f2937);
+    }
+    .yellow-shadow {
+      box-shadow: 0 4px 20px rgba(251, 191, 36, 0.2);
+    }
+    .gallery-item:hover img {
+      transform: scale(1.05);
+    }
+    .gallery-item img {
+      transition: all 0.3s ease;
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+<!-- Admin link - hidden by default, revealed with keyboard shortcut -->
+<a href="/admin/login" id="adminLink" class="admin-link hidden bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-full shadow-lg fixed top-20 right-5 z-50">
+  <i class="fas fa-user-shield mr-2"></i> Admin Panel
+</a>
+
+<!-- ✅ Language toggle button -->
+<button onclick="toggleLanguage()" class="fixed top-5 right-5 z-50 bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-full">
+  🌐 Change Language
+</button>
+
+<!-- Navbar -->
+<nav class="py-4 px-6 bg-gray-900 sticky top-0 z-40 shadow-lg">
+  <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
+    <a href="/en" class="text-2xl font-bold text-yellow-400">Firas Design</a>
+    <div class="flex items-center space-x-4">
+      <a href="/en" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Home</a>
+      <a href="/en/#about" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">About</a>
+      <a href="/en/#services" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Services</a>
+      <a href="/en/#portfolio" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Portfolio</a>
+      <a href="/en/#testimonials" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Testimonials</a>
+      <a href="/en/#contact" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="py-16 px-6 hero-gradient relative">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12 items-center">
+      <div data-aos="fade-left">
+        <h1 class="text-4xl md:text-5xl font-extrabold text-yellow-400 mb-6">{{ service.title_en }}</h1>
+        <p class="text-xl text-gray-300 mb-8">{{ service.subtitle_en }}</p>
+        <div class="flex justify-start mb-6">
+          <div class="bg-yellow-400 text-black px-4 py-2 rounded-lg font-bold text-xl">
+            Price: {{ service.price_en }}
+          </div>
+        </div>
+        <a href="/en/#contact" class="inline-block bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-8 py-3 rounded-full transition" onclick="sessionStorage.setItem('selectedService', '{{ service.title_en }}')">
+          Order Now
+        </a>
+      </div>
+      <div class="relative" data-aos="fade-right" data-aos-delay="200">
+        <img src="{{ service.image_url }}" alt="{{ service.title_en }}" class="w-full h-auto rounded-lg shadow-xl yellow-shadow">
+        <div class="absolute -bottom-4 -left-4 bg-yellow-400 text-black px-4 py-2 rounded-lg font-bold">
+          <i class="fas fa-clock mr-1"></i> {{ service.delivery_time_en }}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Details -->
+<section class="py-16 px-6 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-3 gap-12">
+      <!-- Main Content -->
+      <div class="md:col-span-2">
+        <div class="bg-gray-800 rounded-xl p-8 mb-8" data-aos="fade-up">
+          <h2 class="text-2xl font-bold mb-6 text-yellow-400 flex items-center gap-3">
+            <lord-icon src="https://cdn.lordicon.com/nocovwne.json" trigger="hover" style="width:30px;height:30px"></lord-icon>
+            <span>Service Details</span>
+          </h2>
+          <div class="text-gray-300 space-y-4 text-lg leading-relaxed">
+            {{ service.description_en|safe }}
+          </div>
+        </div>
+        
+        <div class="bg-gray-800 rounded-xl p-8 mb-8" data-aos="fade-up" data-aos-delay="100">
+          <h2 class="text-2xl font-bold mb-6 text-yellow-400 flex items-center gap-3">
+            <lord-icon src="https://cdn.lordicon.com/wloilxuq.json" trigger="hover" style="width:30px;height:30px"></lord-icon>
+            <span>Service Features</span>
+          </h2>
+          <ul class="space-y-3 text-gray-300">
+            {% for feature in service.features_en %}
+              <li class="flex items-start gap-3">
+                <div class="text-yellow-400 mt-1"><i class="fas fa-check-circle"></i></div>
+                <div>{{ feature }}</div>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+        
+        <!-- Gallery -->
+        {% if service.gallery %}
+        <div class="bg-gray-800 rounded-xl p-8" data-aos="fade-up" data-aos-delay="200">
+          <h2 class="text-2xl font-bold mb-6 text-yellow-400 flex items-center gap-3">
+            <lord-icon src="https://cdn.lordicon.com/vixtkkbk.json" trigger="hover" style="width:30px;height:30px"></lord-icon>
+            <span>Portfolio Gallery</span>
+          </h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {% for item in service.gallery %}
+              <div class="gallery-item overflow-hidden rounded-lg">
+                <img src="{{ item.image }}" alt="{{ item.caption_en }}" class="w-full h-64 object-cover rounded-lg">
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+        {% endif %}
+      </div>
+      
+      <!-- Sidebar -->
+      <div class="md:col-span-1">
+        <!-- Package details -->
+        <div class="bg-gray-800 rounded-xl p-6 mb-8 sticky top-24" data-aos="fade-up">
+          <h3 class="text-xl font-bold mb-4 text-yellow-400">Package Includes</h3>
+          <ul class="space-y-3 text-gray-300">
+            {% for item in service.package_includes_en %}
+              <li class="flex items-center gap-2">
+                <i class="fas fa-check text-green-500"></i>
+                <span>{{ item }}</span>
+              </li>
+            {% endfor %}
+          </ul>
+          
+          <hr class="border-gray-700 my-4">
+          
+          <div class="space-y-3">
+            <div class="flex justify-between">
+              <span class="text-gray-400">Delivery Time:</span>
+              <span class="font-bold">{{ service.delivery_time_en }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">Revisions:</span>
+              <span class="font-bold">{{ service.revisions_en }}</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-gray-400">File Formats:</span>
+              <span class="font-bold">{{ service.formats }}</span>
+            </div>
+          </div>
+          
+          <hr class="border-gray-700 my-4">
+          
+          <div class="text-2xl font-bold text-yellow-400 text-center mb-4">
+            {{ service.price_en }}
+          </div>
+          
+          <a href="/en/#contact" class="block w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 rounded-lg text-center transition mb-3" onclick="sessionStorage.setItem('selectedService', '{{ service.title_en }}')">
+            <i class="fas fa-shopping-cart mr-2"></i> Order Now
+          </a>
+          
+          <a href="https://wa.me/+213770123456?text=Hello,%20I'm%20interested%20in%20your%20{{ service.title_en|urlencode }}%20service" target="_blank" class="block w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg text-center transition">
+            <i class="fab fa-whatsapp mr-2"></i> Contact via WhatsApp
+          </a>
+        </div>
+        
+        <!-- Related services -->
+        <div class="bg-gray-800 rounded-xl p-6" data-aos="fade-up" data-aos-delay="100">
+          <h3 class="text-xl font-bold mb-4 text-yellow-400">Related Services</h3>
+          {% for related in service.related_services_en %}
+            <div class="mb-4 pb-4 {% if not loop.last %}border-b border-gray-700{% endif %}">
+              <div class="font-bold mb-1">{{ related.title }}</div>
+              <div class="text-gray-400 text-sm mb-2">{{ related.short_desc }}</div>
+              <a href="{{ related.url }}" class="text-yellow-400 hover:text-yellow-300 text-sm">View Service <i class="fas fa-chevron-right ml-1"></i></a>
+            </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Call to Action -->
+<section class="py-16 px-6 bg-black">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-yellow-400 mb-4" data-aos="fade-up">Ready to Start?</h2>
+    <p class="text-xl text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">Get professional designs that meet your needs and reflect your identity in the best possible way</p>
+    <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+      <a href="/en/#contact" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full text-lg font-bold transition">Contact Me Now</a>
+      <a href="/en/#services" class="bg-gray-800 hover:bg-gray-700 text-white px-8 py-3 rounded-full text-lg font-bold transition">Explore Other Services</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black py-10 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-6 md:mb-0">
+        <h2 class="text-2xl font-bold text-yellow-400">Firas Design</h2>
+        <p class="text-gray-400 mt-2">Creative designs that bring your vision to reality</p>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="/en" class="text-gray-400 hover:text-yellow-400 transition">Home</a>
+        <a href="/en/#about" class="text-gray-400 hover:text-yellow-400 transition">About</a>
+        <a href="/en/#services" class="text-gray-400 hover:text-yellow-400 transition">Services</a>
+        <a href="/en/#portfolio" class="text-gray-400 hover:text-yellow-400 transition">Portfolio</a>
+        <a href="/en/#testimonials" class="text-gray-400 hover:text-yellow-400 transition">Testimonials</a>
+        <a href="/en/#contact" class="text-gray-400 hover:text-yellow-400 transition">Contact</a>
+      </div>
+    </div>
+    
+    <hr class="border-gray-800 my-8">
+    
+    <div class="text-center text-gray-500 text-sm">
+      <p>All rights reserved &copy; 2023 - Firas Design</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleLanguage() {
+  // Switch to Arabic version
+  window.location.href = "/service/{{ service_type }}";
+}
+</script>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تعديل محتوى صفحة الخدمة - لوحة الإدارة</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="/static/css/admin.css">
+  <style>
+    .service-card {
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      height: 100%;
+    }
+    
+    .service-card:hover {
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+      transform: translateY(-5px);
+    }
+    
+    .service-card .card-img-top {
+      height: 180px;
+      object-fit: cover;
+    }
+    
+    .edit-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .service-card:hover .edit-button {
+      opacity: 1;
+    }
+    
+    .badge-price {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      padding: 5px 10px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #ffc107;
+      border-top-right-radius: 10px;
+    }
+    
+    .section-title {
+      position: relative;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    
+    .section-title:after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      height: 3px;
+      width: 50px;
+      background-color: #ffc107;
+    }
+    
+    .form-section {
+      border: 1px solid #2c3034;
+      border-radius: 10px;
+      padding: 20px;
+      margin-bottom: 20px;
+      background-color: #212529;
+    }
+    
+    .form-section-title {
+      background-color: #212529;
+      padding: 10px 15px;
+      margin: -20px -20px 20px -20px;
+      border-radius: 10px 10px 0 0;
+      border-bottom: 2px solid #2c3034;
+    }
+    
+    .feature-item, .package-item, .related-item {
+      background-color: #2c3034;
+      padding: 10px 15px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+    
+    .add-item-btn {
+      width: 100%;
+      border: 2px dashed #2c3034;
+      background-color: transparent;
+      color: #adb5bd;
+      padding: 10px;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    .add-item-btn:hover {
+      background-color: #2c3034;
+      color: #fff;
+    }
+    
+    .item-controls {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .image-preview {
+      position: relative;
+      border-radius: 5px;
+      overflow: hidden;
+      margin-bottom: 15px;
+    }
+    
+    .image-preview img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+    }
+    
+    .image-preview .image-actions {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      padding: 5px;
+      display: flex;
+      justify-content: space-between;
+      opacity: 0;
+      transition: all 0.3s ease;
+    }
+    
+    .image-preview:hover .image-actions {
+      opacity: 1;
+    }
+  </style>
+</head>
+<body class="bg-dark text-white">
+  <div class="container-fluid">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 col-lg-2 d-md-block bg-dark sidebar collapse">
+        <div class="position-sticky pt-3">
+          <!-- Admin Sidebar -->
+          <div class="admin-sidebar">
+            <div class="admin-sidebar-header">
+              <div class="admin-logo">
+                <i class="fas fa-user-shield"></i>
+              </div>
+              <h2>لوحة الإدارة</h2>
+            </div>
+            
+            <p class="admin-sidebar-desc">مرحباً بك في لوحة التحكم</p>
+            
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_dashboard') }}">
+                  <i class="fas fa-tachometer-alt"></i>
+                  <span>لوحة التحكم</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link active" href="{{ url_for('admin_content') }}">
+                  <i class="fas fa-edit"></i>
+                  <span>إدارة المحتوى</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_testimonials') }}">
+                  <i class="fas fa-comments"></i>
+                  <span>آراء العملاء</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('admin_profile') }}">
+                  <i class="fas fa-user-cog"></i>
+                  <span>الملف الشخصي</span>
+                </a>
+              </li>
+              <li class="nav-item mt-4">
+                <a class="nav-link text-danger" href="{{ url_for('admin_logout') }}">
+                  <i class="fas fa-sign-out-alt"></i>
+                  <span>تسجيل الخروج</span>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Main content -->
+      <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 admin-content">
+        <!-- Top navbar -->
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-4 border-bottom admin-header">
+          <h1 class="h2">إدارة صفحات الخدمات</h1>
+          <div class="btn-toolbar mb-2 mb-md-0">
+            <a href="/" class="btn btn-sm btn-outline-primary me-2">
+              <i class="fas fa-eye"></i> عرض الموقع
+            </a>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="window.location.reload()">
+              <i class="fas fa-sync-alt"></i> تحديث
+            </button>
+          </div>
+        </div>
+        
+        <!-- Alert container -->
+        <div class="alert-container">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }} alert-dismissible fade show">
+                  {{ message }}
+                  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+        
+        <!-- Service cards -->
+        <div class="row g-4 mb-5">
+          <div class="col-12 mb-4">
+            <h2 class="section-title">صفحات الخدمات</h2>
+            <p class="text-muted">يمكنك تعديل محتوى صفحات الخدمات التفصيلية من هنا.</p>
+          </div>
+          
+          <!-- Card 1 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card service-card bg-dark">
+              <div class="position-relative">
+                <img src="/static/uploads/social-media-design.jpg" class="card-img-top" alt="تصميم منشورات السوشيال ميديا">
+                <a href="{{ url_for('admin_edit_service', service_type='social-media') }}" class="btn btn-primary btn-sm edit-button">
+                  <i class="fas fa-edit"></i> تعديل
+                </a>
+                <div class="badge-price">5000 دج - 15000 دج</div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">تصميم منشورات السوشيال ميديا</h5>
+                <p class="card-text text-muted small">محتوى بصري جذاب ومميز لمنصات التواصل الاجتماعي</p>
+                <a href="/service/social-media" target="_blank" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="fas fa-external-link-alt me-1"></i> عرض الصفحة
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 2 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card service-card bg-dark">
+              <div class="position-relative">
+                <img src="/static/uploads/logo-design.jpg" class="card-img-top" alt="تصميم الشعارات والهوية البصرية">
+                <a href="{{ url_for('admin_edit_service', service_type='logo-brand') }}" class="btn btn-primary btn-sm edit-button">
+                  <i class="fas fa-edit"></i> تعديل
+                </a>
+                <div class="badge-price">15000 دج - 50000 دج</div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">تصميم الشعارات والهوية البصرية</h5>
+                <p class="card-text text-muted small">شعار مميز يعكس روح علامتك التجارية وهوية بصرية متكاملة</p>
+                <a href="/service/logo-brand" target="_blank" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="fas fa-external-link-alt me-1"></i> عرض الصفحة
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 3 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card service-card bg-dark">
+              <div class="position-relative">
+                <img src="/static/uploads/print-design.jpg" class="card-img-top" alt="تصميم المطبوعات">
+                <a href="{{ url_for('admin_edit_service', service_type='print') }}" class="btn btn-primary btn-sm edit-button">
+                  <i class="fas fa-edit"></i> تعديل
+                </a>
+                <div class="badge-price">3000 دج - 20000 دج</div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">تصميم المطبوعات</h5>
+                <p class="card-text text-muted small">بروشورات، فلايرز، بطاقات عمل، ملصقات وأكثر بتصاميم عصرية وجذابة</p>
+                <a href="/service/print" target="_blank" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="fas fa-external-link-alt me-1"></i> عرض الصفحة
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 4 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card service-card bg-dark">
+              <div class="position-relative">
+                <img src="/static/uploads/business-card.jpg" class="card-img-top" alt="تصميم بطاقات العمل">
+                <a href="{{ url_for('admin_edit_service', service_type='business-card') }}" class="btn btn-primary btn-sm edit-button">
+                  <i class="fas fa-edit"></i> تعديل
+                </a>
+                <div class="badge-price">2000 دج - 5000 دج</div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">تصميم بطاقات العمل</h5>
+                <p class="card-text text-muted small">بطاقات عمل احترافية تعكس هوية شركتك بتصاميم عصرية وطباعة عالية الجودة</p>
+                <a href="/service/business-card" target="_blank" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="fas fa-external-link-alt me-1"></i> عرض الصفحة
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 5 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card service-card bg-dark">
+              <div class="position-relative">
+                <img src="/static/uploads/photo-manipulation.jpg" class="card-img-top" alt="التصميم الإبداعي والفوتومانيبوليشن">
+                <a href="{{ url_for('admin_edit_service', service_type='photo-manipulation') }}" class="btn btn-primary btn-sm edit-button">
+                  <i class="fas fa-edit"></i> تعديل
+                </a>
+                <div class="badge-price">7000 دج - 30000 دج</div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">التصميم الإبداعي والفوتومانيبوليشن</h5>
+                <p class="card-text text-muted small">تصاميم إبداعية متقدمة وتعديل احترافي للصور</p>
+                <a href="/service/photo-manipulation" target="_blank" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="fas fa-external-link-alt me-1"></i> عرض الصفحة
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Card 6 -->
+          <div class="col-md-6 col-lg-4">
+            <div class="card service-card bg-dark">
+              <div class="position-relative">
+                <img src="/static/uploads/book-cover.jpg" class="card-img-top" alt="تصميم أغلفة الكتب">
+                <a href="{{ url_for('admin_edit_service', service_type='book-cover') }}" class="btn btn-primary btn-sm edit-button">
+                  <i class="fas fa-edit"></i> تعديل
+                </a>
+                <div class="badge-price">8000 دج - 25000 دج</div>
+              </div>
+              <div class="card-body">
+                <h5 class="card-title">تصميم أغلفة الكتب</h5>
+                <p class="card-text text-muted small">أغلفة احترافية للكتب والمجلات تجذب القراء وتعكس محتوى الكتاب</p>
+                <a href="/service/book-cover" target="_blank" class="btn btn-outline-secondary btn-sm w-100">
+                  <i class="fas fa-external-link-alt me-1"></i> عرض الصفحة
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Add new service button -->
+        <div class="text-center mb-5">
+          <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addServiceModal">
+            <i class="fas fa-plus-circle me-1"></i> إضافة خدمة جديدة
+          </button>
+        </div>
+      </main>
+    </div>
+  </div>
+  
+  <!-- Add Service Modal -->
+  <div class="modal fade" id="addServiceModal" tabindex="-1" aria-labelledby="addServiceModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content bg-dark text-white">
+        <div class="modal-header">
+          <h5 class="modal-title" id="addServiceModalLabel">إضافة خدمة جديدة</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="newServiceForm" action="{{ url_for('admin_add_service') }}" method="post" enctype="multipart/form-data">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <label for="service_type" class="form-label">معرّف الخدمة <span class="text-danger">*</span></label>
+                <input type="text" class="form-control bg-darker" id="service_type" name="service_type" required
+                       placeholder="مثال: web-design">
+                <div class="form-text text-muted">سيتم استخدامه في رابط الصفحة (بالإنجليزية فقط، بدون مسافات)</div>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="service_title" class="form-label">عنوان الخدمة <span class="text-danger">*</span></label>
+                <input type="text" class="form-control bg-darker" id="service_title" name="service_title" required>
+              </div>
+              
+              <div class="col-12">
+                <label for="service_subtitle" class="form-label">العنوان الفرعي</label>
+                <input type="text" class="form-control bg-darker" id="service_subtitle" name="service_subtitle">
+              </div>
+              
+              <div class="col-md-6">
+                <label for="service_price" class="form-label">السعر <span class="text-danger">*</span></label>
+                <input type="text" class="form-control bg-darker" id="service_price" name="service_price" required>
+              </div>
+              
+              <div class="col-md-6">
+                <label for="service_featured_image" class="form-label">الصورة الرئيسية <span class="text-danger">*</span></label>
+                <input type="file" class="form-control bg-darker" id="service_featured_image" name="service_featured_image" required>
+              </div>
+              
+              <div class="col-12">
+                <label for="service_description" class="form-label">وصف الخدمة <span class="text-danger">*</span></label>
+                <textarea class="form-control bg-darker" id="service_description" name="service_description" rows="4" required></textarea>
+              </div>
+            </div>
+            
+            <div class="modal-footer mt-4">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+              <button type="submit" class="btn btn-primary">إضافة الخدمة</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="/static/js/admin.js"></script>
+</body>
+</html>

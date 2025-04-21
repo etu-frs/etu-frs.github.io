@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Firas Design - Creative Design Services</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+  <script src="https://cdn.lordicon.com/lordicon.js"></script>
+  <script src="/static/js/admin.js" defer></script>
+  <style>
+    body {
+      font-family: 'Cairo', sans-serif;
+    }
+    .hero-gradient {
+      background: linear-gradient(to bottom, #111827, #1f2937);
+    }
+    .service-card:hover {
+      transform: translateY(-10px);
+    }
+    .service-card {
+      transition: all 0.3s ease;
+    }
+    .testimonial-card {
+      opacity: 0.85;
+      transition: all 0.3s ease;
+    }
+    .testimonial-card:hover {
+      opacity: 1;
+      transform: translateY(-5px);
+    }
+  </style>
+</head>
+<body class="bg-black text-white">
+
+<!-- Admin link - hidden by default, revealed with keyboard shortcut -->
+<a href="/admin/login" id="adminLink" class="admin-link hidden bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-full shadow-lg fixed top-20 right-5 z-50">
+  <i class="fas fa-user-shield mr-2"></i> Admin Panel
+</a>
+
+<!-- ✅ Language toggle button -->
+<button onclick="toggleLanguage()" class="fixed top-5 right-5 z-50 bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-full">
+  🌐 Change Language
+</button>
+
+<!-- Navbar -->
+<nav class="py-4 px-6 bg-gray-900 sticky top-0 z-40 shadow-lg">
+  <div class="max-w-6xl mx-auto flex flex-wrap justify-between items-center">
+    <a href="/en" class="text-2xl font-bold text-yellow-400">Firas Design</a>
+    <div class="flex items-center space-x-4">
+      <a href="/en" class="text-yellow-400 hover:text-yellow-300 px-3 py-2 transition">Home</a>
+      <a href="#about" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">About</a>
+      <a href="#services" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Services</a>
+      <a href="#portfolio" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Portfolio</a>
+      <a href="#testimonials" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Testimonials</a>
+      <a href="#contact" class="text-gray-300 hover:text-yellow-400 px-3 py-2 transition">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="py-20 px-4 hero-gradient">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="text-left" data-aos="fade-right">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          Creative <span class="text-yellow-400">Designs</span> That Bring Your Vision to <span class="text-yellow-400">Reality</span>
+        </h1>
+        
+        <p class="text-xl text-gray-300 mb-8">Innovative design solutions that enhance your brand identity and help you stand out from competitors</p>
+        
+        <div class="flex flex-wrap gap-4">
+          <a href="#contact" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full text-lg font-bold transition">
+            Get Started
+          </a>
+          <a href="#portfolio" class="bg-transparent border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-black transition">
+            View Portfolio
+          </a>
+        </div>
+      </div>
+      
+      <div class="relative" data-aos="fade-left">
+        <img src="https://source.unsplash.com/random/600x600/?design,creativity" alt="Creative Design" class="rounded-lg shadow-2xl">
+        <div class="absolute -bottom-5 -right-5 bg-yellow-400 text-black py-3 px-6 rounded-lg font-bold">
+          <div class="flex items-center">
+            <lord-icon src="https://cdn.lordicon.com/msetysan.json" trigger="hover" style="width:30px;height:30px"></lord-icon>
+            <span class="ml-2">Creative Solutions</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Me -->
+<section id="about" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/bhfjfgqz.json" trigger="hover" style="width:40px;height:40px"></lord-icon>
+      <span>About Me</span>
+    </h2>
+    
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="relative" data-aos="fade-right">
+        <img src="https://source.unsplash.com/random/600x800/?designer,creative" alt="Designer" class="rounded-lg shadow-xl">
+        <div class="absolute -top-5 -left-5 bg-yellow-400 text-black py-2 px-4 rounded-lg font-bold">
+          <div class="flex items-center">
+            <lord-icon src="https://cdn.lordicon.com/ajkxzzfb.json" trigger="hover" style="width:25px;height:25px"></lord-icon>
+            <span class="ml-2">5+ Years Experience</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-left" data-aos="fade-left">
+        <h3 class="text-2xl font-bold mb-4">Firas Al-Ahmad</h3>
+        <p class="text-lg text-gray-300 mb-6">A professional designer with over 5 years of experience in creating distinctive visual identities for brands. I specialize in logo design, brand identity, print design, and social media graphics.</p>
+        
+        <div class="space-y-4 mb-6">
+          <div class="flex items-start gap-3">
+            <div class="text-yellow-400 mt-1"><i class="fas fa-paint-brush"></i></div>
+            <div>
+              <strong>Creative Thinking:</strong> I approach each project with innovative ideas and creative solutions that make your brand stand out.
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="text-yellow-400 mt-1"><i class="fas fa-bullseye"></i></div>
+            <div>
+              <strong>Customer Focus:</strong> I work closely with clients to understand their vision and translate it into stunning designs.
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="text-yellow-400 mt-1"><i class="fas fa-laptop-code"></i></div>
+            <div>
+              <strong>Technical Proficiency:</strong> Expert in Adobe Creative Suite with strong attention to detail and quality.
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap gap-2">
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">Graphic Design</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">Brand Identity</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">Logo Design</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">Social Media</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">Print Design</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">UI/UX Design</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-20 px-4 bg-black">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/ynwbvguu.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>My Services</span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Service 1 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/dtgezzsi.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Logo Design</h3>
+        <p class="text-gray-300">Creating unique logos that reflect your project's identity and help you stand out from competitors.</p>
+        <a href="/en/service/logo-brand" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>View More</span>
+          <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      <!-- Service 2 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/gqdnbnwt.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Brand Identity</h3>
+        <p class="text-gray-300">Developing a complete brand identity with a usage guide that ensures brand consistency across all touchpoints.</p>
+        <a href="/en/service/logo-brand" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>View More</span>
+          <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      <!-- Service 3 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/wloilxuq.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Print Design</h3>
+        <p class="text-gray-300">Designing various prints like brochures, flyers, catalogs, and business cards with attractive designs.</p>
+        <a href="/en/service/print" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>View More</span>
+          <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      <!-- Service 4 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/tsnvgrkp.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Website Design</h3>
+        <p class="text-gray-300">Designing modern and user-friendly website interfaces that match your project's identity.</p>
+        <a href="#" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>View More</span>
+          <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      <!-- Service 5 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="500">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/masykznr.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Social Media</h3>
+        <p class="text-gray-300">Designing posts and templates for social media platforms that help increase engagement.</p>
+        <a href="/en/service/social-media" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>View More</span>
+          <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+      <!-- Service 6 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105" data-aos="fade-up" data-aos-delay="600">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/rjzlnunf.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">Book Cover Design</h3>
+        <p class="text-gray-300">Designing attractive book and novel covers that catch readers' attention and express the book's content.</p>
+        <a href="/en/service/book-cover" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>View More</span>
+          <i class="fas fa-arrow-right ml-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/kxoxiwrf.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>Portfolio</span>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Project 1 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="100">
+        <img src="https://source.unsplash.com/600x400/?branding,logo" alt="Project 1" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">Brand Identity for Tech Company</h3>
+          <p class="text-yellow-400">Brand Design - 2023</p>
+        </div>
+      </div>
+      <!-- Project 2 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="200">
+        <img src="https://source.unsplash.com/600x400/?design,packaging" alt="Project 2" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">Book Cover Design</h3>
+          <p class="text-yellow-400">Cover Design - 2022</p>
+        </div>
+      </div>
+      <!-- Project 3 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="300">
+        <img src="https://source.unsplash.com/600x400/?ui,website" alt="Project 3" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">Website Design</h3>
+          <p class="text-yellow-400">Web Design - 2023</p>
+        </div>
+      </div>
+      <!-- Project 4 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="400">
+        <img src="https://source.unsplash.com/600x400/?flyer,print" alt="Project 4" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">Promotional Brochure</h3>
+          <p class="text-yellow-400">Print Design - 2022</p>
+        </div>
+      </div>
+      <!-- Project 5 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="500">
+        <img src="https://source.unsplash.com/600x400/?branding,identity" alt="Project 5" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">Restaurant Logo</h3>
+          <p class="text-yellow-400">Logo Design - 2023</p>
+        </div>
+      </div>
+      <!-- Project 6 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="600">
+        <img src="https://source.unsplash.com/600x400/?social,media" alt="Project 6" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">Social Media Management</h3>
+          <p class="text-yellow-400">Social Media Design - 2022</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-10">
+      <a href="/en/portfolio" class="inline-block bg-transparent border-2 border-yellow-400 text-yellow-400 px-6 py-3 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-black transition">View More Projects</a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials" class="py-20 px-4 bg-black">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/hbvgknxo.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>Client Testimonials</span>
+    </h2>
+    
+    <div class="relative mb-10">
+      <div class="testimonials-container grid grid-cols-1 md:grid-cols-3 gap-6">
+        {% if testimonials %}
+          {% for testimonial in testimonials %}
+          <div class="testimonial-card bg-gray-900 p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+            <div class="rating-display mb-3" data-rating="{{ testimonial.rating }}"></div>
+            <p class="text-gray-300 mb-4">"{{ testimonial.content }}"</p>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-lg font-bold">{{ testimonial.name }}</h4>
+                <p class="text-yellow-400 text-sm">{{ testimonial.company }}</p>
+              </div>
+              <div class="text-gray-500 text-sm">
+                {{ testimonial.created_at.strftime('%Y-%m-%d') }}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-span-3 text-center py-10">
+            <p class="text-gray-400">No testimonials yet. Be the first to add a testimonial!</p>
+          </div>
+        {% endif %}
+      </div>
+      
+      <!-- Navigation buttons -->
+      <button id="prevTestimonial" class="absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-900 hover:bg-gray-800 text-white p-2 rounded-full focus:outline-none">
+        <i class="fas fa-chevron-left"></i>
+      </button>
+      <button id="nextTestimonial" class="absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-900 hover:bg-gray-800 text-white p-2 rounded-full focus:outline-none">
+        <i class="fas fa-chevron-right"></i>
+      </button>
+    </div>
+    
+    <div class="bg-gray-900 p-8 rounded-xl max-w-3xl mx-auto" data-aos="fade-up">
+      <h3 class="text-xl font-bold mb-4 text-center">Share Your Experience with Our Services</h3>
+      
+      <form id="testimonialForm" method="post" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-400 mb-2">Name <span class="text-yellow-400">*</span></label>
+            <input type="text" name="name" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required>
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-2">Company</label>
+            <input type="text" name="company" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-gray-400 mb-2">Rating</label>
+          <div class="flex text-2xl">
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="1"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="2"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="3"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="4"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="5"></i>
+            <input type="hidden" name="rating" value="5">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-gray-400 mb-2">Comment <span class="text-yellow-400">*</span></label>
+          <textarea name="content" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required></textarea>
+        </div>
+        
+        <div class="text-center">
+          <button type="submit" class="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-6 py-3 rounded-full transition">Submit Testimonial</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Me -->
+<section id="contact" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/diihvcfp.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>Contact Me</span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div class="space-y-8" data-aos="fade-right">
+        <div class="flex items-center gap-4">
+          <div class="text-yellow-400 text-2xl">
+            <lord-icon src="https://cdn.lordicon.com/cnbtojmk.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1">Email</h3>
+            <p class="text-gray-300">info@firas-designs.com</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <div class="text-yellow-400 text-2xl">
+            <lord-icon src="https://cdn.lordicon.com/tftaqjwp.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1">Phone</h3>
+            <p class="text-gray-300">+213 770 123 456</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <div class="text-yellow-400 text-2xl">
+            <lord-icon src="https://cdn.lordicon.com/osuxyevn.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1">Address</h3>
+            <p class="text-gray-300">Algiers, Algeria</p>
+          </div>
+        </div>
+        
+        <div class="flex gap-4 mt-8">
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-behance text-xl"></i>
+          </a>
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-dribbble text-xl"></i>
+          </a>
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-linkedin-in text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="bg-gray-800 rounded-xl p-8" data-aos="fade-left">
+        <h3 class="text-xl font-bold mb-6">Send Me a Message</h3>
+        <form class="space-y-4">
+          <div>
+            <label class="block text-gray-400 mb-2">Name <span class="text-yellow-400">*</span></label>
+            <input type="text" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required>
+          </div>
+          
+          <div>
+            <label class="block text-gray-400 mb-2">Email <span class="text-yellow-400">*</span></label>
+            <input type="email" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required>
+          </div>
+          
+          <div>
+            <label class="block text-gray-400 mb-2">Subject</label>
+            <input type="text" id="subjectField" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none">
+          </div>
+          
+          <div>
+            <label class="block text-gray-400 mb-2">Message <span class="text-yellow-400">*</span></label>
+            <textarea rows="4" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required></textarea>
+          </div>
+          
+          <div>
+            <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 rounded-lg transition">Send Message</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-black py-10 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="flex flex-col md:flex-row justify-between items-center">
+      <div class="mb-6 md:mb-0">
+        <h2 class="text-2xl font-bold text-yellow-400">Firas Design</h2>
+        <p class="text-gray-400 mt-2">Creative designs that bring your vision to reality</p>
+      </div>
+      
+      <div class="flex flex-wrap justify-center gap-4">
+        <a href="#" class="text-gray-400 hover:text-yellow-400 transition">Home</a>
+        <a href="#about" class="text-gray-400 hover:text-yellow-400 transition">About</a>
+        <a href="#services" class="text-gray-400 hover:text-yellow-400 transition">Services</a>
+        <a href="#portfolio" class="text-gray-400 hover:text-yellow-400 transition">Portfolio</a>
+        <a href="#testimonials" class="text-gray-400 hover:text-yellow-400 transition">Testimonials</a>
+        <a href="#contact" class="text-gray-400 hover:text-yellow-400 transition">Contact</a>
+      </div>
+    </div>
+    
+    <hr class="border-gray-800 my-8">
+    
+    <div class="text-center text-gray-500 text-sm">
+      <p>All rights reserved &copy; 2023 - Firas Design</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+
+  // Retrieve selected service info
+  document.addEventListener('DOMContentLoaded', function() {
+    // Check for selected service
+    const selectedService = sessionStorage.getItem('selectedService');
+    if (selectedService) {
+      // Set subject field value
+      const subjectField = document.getElementById('subjectField');
+      if (subjectField) {
+        subjectField.value = 'Inquiry about: ' + selectedService;
+      }
+      
+      // Scroll to contact section
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+      
+      // Clear selected service from storage
+      // sessionStorage.removeItem('selectedService');
+    }
+  });
+
+  function toggleLanguage() {
+    // Switch to Arabic
+    window.location.href = "/";
+  }
+</script>
+</body>
+</html>

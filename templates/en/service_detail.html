@@ -1,0 +1,173 @@
+{% extends "en/base.html" %}
+
+{% block title %}{{ service.title_en }} - Firas Design{% endblock %}
+
+{% block content %}
+<!-- Service Header -->
+<section class="py-20 px-4 hero-gradient">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="text-left" data-aos="fade-right">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          {{ service.title_en }}
+        </h1>
+        <p class="text-xl text-gray-300 mb-8">{{ service.subtitle_en }}</p>
+        
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-yellow-400 text-sm">Price</div>
+            <div class="font-bold">{{ service.price_en }}</div>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-yellow-400 text-sm">Delivery Time</div>
+            <div class="font-bold">{{ service.delivery_time_en }}</div>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-yellow-400 text-sm">Revisions</div>
+            <div class="font-bold">{{ service.revisions_en }}</div>
+          </div>
+          <div class="bg-gray-800 p-4 rounded-lg">
+            <div class="text-yellow-400 text-sm">File Formats</div>
+            <div class="font-bold text-sm">{{ service.formats }}</div>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap gap-4">
+          <button onclick="selectService('{{ service.title_en }}')" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full text-lg font-bold transition">
+            Order Now
+          </button>
+          <a href="#gallery" class="bg-transparent border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-black transition">
+            View Portfolio
+          </a>
+        </div>
+      </div>
+      
+      <div class="relative" data-aos="fade-left">
+        <img src="{{ service.image_url or 'https://source.unsplash.com/600x600/?design,creative' }}" alt="{{ service.title_en }}" class="rounded-lg shadow-2xl">
+        <div class="absolute -bottom-5 -right-5 bg-yellow-400 text-black py-3 px-6 rounded-lg font-bold">
+          <div class="flex items-center">
+            <i class="fas fa-star ml-2"></i>
+            <span>Premium Service</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Service Description -->
+<section class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-12">
+      <div data-aos="fade-right">
+        <h2 class="text-3xl font-bold text-yellow-400 mb-6">Service Description</h2>
+        <div class="text-gray-300 leading-relaxed">
+          {{ service.description_en | safe }}
+        </div>
+      </div>
+      
+      <div data-aos="fade-left">
+        <h3 class="text-2xl font-bold text-white mb-6">Service Features</h3>
+        <ul class="space-y-3">
+          {% for feature in service.features_en %}
+          <li class="flex items-start gap-3">
+            <i class="fas fa-check-circle text-yellow-400 mt-1"></i>
+            <span class="text-gray-300">{{ feature }}</span>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- What's Included -->
+<section class="py-20 px-4 bg-black">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-yellow-400 mb-12" data-aos="fade-up">What's Included</h2>
+    <div class="grid md:grid-cols-2 gap-6">
+      {% for item in service.package_includes_en %}
+      <div class="bg-gray-900 p-6 rounded-lg" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+        <div class="text-yellow-400 text-2xl mb-4">
+          <i class="fas fa-gift"></i>
+        </div>
+        <p class="text-gray-300">{{ item }}</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- Gallery -->
+{% if service.gallery %}
+<section id="gallery" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12" data-aos="fade-up">Portfolio Gallery</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+      {% for item in service.gallery %}
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+        <img src="{{ item.image }}" alt="{{ item.caption_en }}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+          <p class="text-white p-4 font-semibold">{{ item.caption_en }}</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Related Services -->
+{% if service.related_services_en %}
+<section class="py-20 px-4 bg-black">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12" data-aos="fade-up">Related Services</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for related in service.related_services_en %}
+      <div class="bg-gray-900 p-6 rounded-xl hover:transform hover:scale-105 transition-all duration-300" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+        <h3 class="text-xl font-bold mb-3">{{ related.title }}</h3>
+        <p class="text-gray-300 mb-4">{{ related.short_desc }}</p>
+        <a href="{{ related.url }}" class="inline-block bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-full text-sm font-bold transition">
+          Learn More
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- CTA Section -->
+<section class="py-20 px-4 bg-gray-900">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-yellow-400 mb-6" data-aos="fade-up">Ready to Start Your Project?</h2>
+    <p class="text-xl text-gray-300 mb-8" data-aos="fade-up" data-aos-delay="100">Contact me now for a free consultation and custom quote</p>
+    <div class="flex flex-wrap justify-center gap-4" data-aos="fade-up" data-aos-delay="200">
+      <button onclick="selectService('{{ service.title_en }}')" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full text-lg font-bold transition">
+        Start Your Project
+      </button>
+      <a href="/en#portfolio" class="bg-transparent border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-black transition">
+        View More Work
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({
+    duration: 800,
+    once: true
+  });
+
+  function selectService(serviceName) {
+    // Store selected service for contact form
+    sessionStorage.setItem('selectedService', serviceName);
+    
+    // Redirect to contact section
+    window.location.href = '/en#contact';
+  }
+</script>
+{% endblock %}

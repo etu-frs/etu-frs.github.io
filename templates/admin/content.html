@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المحتوى - لوحة الإدارة</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <!-- Header -->
+    <header class="bg-gray-800 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-6">
+                <div class="flex items-center">
+                    <div class="bg-yellow-400 text-black w-10 h-10 rounded-full flex items-center justify-center mr-3">
+                        <i class="fas fa-edit"></i>
+                    </div>
+                    <h1 class="text-xl font-bold">إدارة المحتوى</h1>
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <a href="/admin/dashboard" class="text-gray-300 hover:text-yellow-400 transition">
+                        <i class="fas fa-dashboard mr-2"></i>
+                        لوحة الإدارة
+                    </a>
+                    <a href="/" class="text-gray-300 hover:text-yellow-400 transition">
+                        <i class="fas fa-home mr-2"></i>
+                        عرض الموقع
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h2 class="text-2xl font-bold text-yellow-400 mb-4">إدارة محتوى الموقع</h2>
+            <p class="text-gray-300">تحرير محتوى أقسام الموقع المختلفة</p>
+        </div>
+
+        <!-- Sections Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {% for section in sections %}
+            <div class="bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-500 text-white w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                        {% if section.name == 'hero' %}
+                        <i class="fas fa-home"></i>
+                        {% elif section.name == 'about' %}
+                        <i class="fas fa-user"></i>
+                        {% elif section.name == 'services' %}
+                        <i class="fas fa-cogs"></i>
+                        {% elif section.name == 'portfolio' %}
+                        <i class="fas fa-images"></i>
+                        {% elif section.name == 'testimonials' %}
+                        <i class="fas fa-star"></i>
+                        {% elif section.name == 'contact' %}
+                        <i class="fas fa-envelope"></i>
+                        {% else %}
+                        <i class="fas fa-file-alt"></i>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold">{{ section.title }}</h3>
+                        <p class="text-gray-400 text-sm">قسم {{ section.name }}</p>
+                    </div>
+                </div>
+                
+                <p class="text-gray-300 mb-4">تحرير محتوى قسم {{ section.title }}</p>
+                
+                <div class="flex justify-between items-center">
+                    <a href="/admin/content/{{ section.id }}" class="bg-yellow-400 hover:bg-yellow-300 text-black px-4 py-2 rounded-lg transition inline-flex items-center">
+                        <i class="fas fa-edit mr-2"></i>
+                        تحرير المحتوى
+                    </a>
+                    <span class="text-gray-500 text-sm">
+                        المعرف: {{ section.id }}
+                    </span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="mt-12">
+            <h3 class="text-xl font-bold text-yellow-400 mb-6">إجراءات سريعة</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">إضافة قسم جديد</h4>
+                    <p class="text-gray-400 text-sm mb-3">إنشاء قسم جديد للموقع</p>
+                    <button class="bg-green-500 hover:bg-green-400 text-white px-3 py-1 rounded text-sm transition">
+                        إضافة قسم
+                    </button>
+                </div>
+                
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">رفع الصور</h4>
+                    <p class="text-gray-400 text-sm mb-3">إدارة صور الموقع</p>
+                    <button class="bg-blue-500 hover:bg-blue-400 text-white px-3 py-1 rounded text-sm transition">
+                        رفع صورة
+                    </button>
+                </div>
+                
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">إعدادات الموقع</h4>
+                    <p class="text-gray-400 text-sm mb-3">تعديل إعدادات عامة</p>
+                    <button class="bg-purple-500 hover:bg-purple-400 text-white px-3 py-1 rounded text-sm transition">
+                        الإعدادات
+                    </button>
+                </div>
+                
+                <div class="bg-gray-800 p-4 rounded-lg">
+                    <h4 class="font-bold mb-2">نسخ احتياطي</h4>
+                    <p class="text-gray-400 text-sm mb-3">إنشاء نسخة احتياطية</p>
+                    <button class="bg-orange-500 hover:bg-orange-400 text-white px-3 py-1 rounded text-sm transition">
+                        إنشاء نسخة
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="mt-12">
+            <h3 class="text-xl font-bold text-yellow-400 mb-6">النشاط الأخير</h3>
+            <div class="bg-gray-800 rounded-lg p-6">
+                <div class="space-y-4">
+                    <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                        <i class="fas fa-edit text-blue-400 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">تم تحديث قسم "من أنا؟"</p>
+                            <p class="text-sm text-gray-400">منذ ساعتين</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                        <i class="fas fa-image text-green-400 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">تم رفع صورة جديدة</p>
+                            <p class="text-sm text-gray-400">منذ 4 ساعات</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center p-3 bg-gray-700 rounded-lg">
+                        <i class="fas fa-star text-yellow-400 mr-3"></i>
+                        <div>
+                            <p class="font-semibold">تم اعتماد تعليق جديد</p>
+                            <p class="text-sm text-gray-400">أمس</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

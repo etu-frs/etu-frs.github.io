@@ -1,0 +1,281 @@
+{% extends "en/base.html" %}
+
+{% block title %}Portfolio - Firas Design{% endblock %}
+
+{% block content %}
+<!-- Portfolio Header -->
+<section class="py-20 px-4 hero-gradient">
+  <div class="max-w-6xl mx-auto text-center">
+    <h1 class="text-4xl md:text-5xl font-bold mb-6">
+      My <span class="text-yellow-400">Portfolio</span>
+    </h1>
+    <p class="text-xl text-gray-300 mb-8">Explore a collection of my outstanding work in graphic design and visual identity</p>
+  </div>
+</section>
+
+<!-- Portfolio Gallery -->
+<section class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <!-- Filter Buttons -->
+    <div class="flex flex-wrap justify-center gap-4 mb-12">
+      <button class="portfolio-filter active bg-yellow-400 text-black px-6 py-2 rounded-full font-bold transition" data-filter="all">
+        All Work
+      </button>
+      <button class="portfolio-filter bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full transition" data-filter="logo">
+        Logos
+      </button>
+      <button class="portfolio-filter bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full transition" data-filter="brand">
+        Brand Identity
+      </button>
+      <button class="portfolio-filter bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full transition" data-filter="print">
+        Print Design
+      </button>
+      <button class="portfolio-filter bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full transition" data-filter="social">
+        Social Media
+      </button>
+      <button class="portfolio-filter bg-gray-800 hover:bg-gray-700 text-white px-6 py-2 rounded-full transition" data-filter="web">
+        Web Design
+      </button>
+    </div>
+
+    <!-- Portfolio Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="portfolioGrid">
+      <!-- Portfolio items will be loaded here -->
+    </div>
+
+    <!-- Load More Button -->
+    <div class="text-center mt-12">
+      <button id="loadMoreBtn" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full font-bold transition">
+        Load More
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="py-20 px-4 bg-black">
+  <div class="max-w-4xl mx-auto text-center">
+    <h2 class="text-3xl font-bold text-yellow-400 mb-6">Like What You See?</h2>
+    <p class="text-xl text-gray-300 mb-8">Let's work together to turn your vision into amazing design</p>
+    <a href="/en#contact" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full text-lg font-bold transition">
+      Contact Me Now
+    </a>
+  </div>
+</section>
+
+{% if testimonials %}
+<!-- Client Testimonials -->
+<section class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12">Client Testimonials</h2>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {% for testimonial in testimonials %}
+      <div class="bg-gray-800 p-6 rounded-lg shadow-lg">
+        <div class="mb-4">
+          {% for i in range(testimonial.rating) %}
+            <i class="fas fa-star text-yellow-400"></i>
+          {% endfor %}
+          {% for i in range(5 - testimonial.rating) %}
+            <i class="far fa-star text-gray-400"></i>
+          {% endfor %}
+        </div>
+        <p class="text-gray-300 mb-4">"{{ testimonial.content }}"</p>
+        <div>
+          <h4 class="font-bold">{{ testimonial.name }}</h4>
+          {% if testimonial.company %}
+          <p class="text-yellow-400 text-sm">{{ testimonial.company }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Sample portfolio data - In real implementation, this would come from API
+const portfolioItems = [
+  {
+    id: 1,
+    title: "Tech Company Logo",
+    category: "logo",
+    image: "https://source.unsplash.com/400x300/?logo,tech",
+    description: "Modern logo design for a startup tech company",
+    year: "2023",
+    views: 245,
+    likes: 18
+  },
+  {
+    id: 2,
+    title: "Restaurant Brand Identity",
+    category: "brand",
+    image: "https://source.unsplash.com/400x300/?restaurant,branding",
+    description: "Complete brand identity for an oriental restaurant",
+    year: "2023",
+    views: 189,
+    likes: 24
+  },
+  {
+    id: 3,
+    title: "Real Estate Brochure",
+    category: "print",
+    image: "https://source.unsplash.com/400x300/?brochure,real-estate",
+    description: "Elegant brochure design for a real estate development company",
+    year: "2022",
+    views: 156,
+    likes: 12
+  },
+  {
+    id: 4,
+    title: "Social Media Posts",
+    category: "social",
+    image: "https://source.unsplash.com/400x300/?social-media,posts",
+    description: "Social media campaign for a fashion brand",
+    year: "2023",
+    views: 298,
+    likes: 35
+  },
+  {
+    id: 5,
+    title: "Website Interface",
+    category: "web",
+    image: "https://source.unsplash.com/400x300/?website,ui",
+    description: "User interface design for a consulting company website",
+    year: "2023",
+    views: 167,
+    likes: 21
+  },
+  {
+    id: 6,
+    title: "Book Cover",
+    category: "print",
+    image: "https://source.unsplash.com/400x300/?book,cover",
+    description: "Literary novel cover design",
+    year: "2022",
+    views: 134,
+    likes: 15
+  }
+];
+
+let currentFilter = 'all';
+let currentPage = 1;
+const itemsPerPage = 6;
+
+// Initialize portfolio
+document.addEventListener('DOMContentLoaded', function() {
+  loadPortfolioItems();
+  setupFilterButtons();
+});
+
+function loadPortfolioItems() {
+  const filteredItems = currentFilter === 'all' 
+    ? portfolioItems 
+    : portfolioItems.filter(item => item.category === currentFilter);
+  
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const itemsToShow = filteredItems.slice(0, endIndex);
+  
+  const grid = document.getElementById('portfolioGrid');
+  
+  if (currentPage === 1) {
+    grid.innerHTML = '';
+  }
+  
+  itemsToShow.slice(startIndex).forEach(item => {
+    const portfolioItem = createPortfolioItem(item);
+    grid.appendChild(portfolioItem);
+  });
+  
+  // Update load more button
+  const loadMoreBtn = document.getElementById('loadMoreBtn');
+  if (endIndex >= filteredItems.length) {
+    loadMoreBtn.style.display = 'none';
+  } else {
+    loadMoreBtn.style.display = 'block';
+  }
+}
+
+function createPortfolioItem(item) {
+  const div = document.createElement('div');
+  div.className = 'portfolio-item group relative overflow-hidden rounded-xl bg-gray-800 shadow-lg';
+  div.innerHTML = `
+    <div class="relative">
+      <img src="${item.image}" alt="${item.title}" class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+      <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <div class="absolute bottom-0 left-0 right-0 p-6">
+          <h3 class="text-xl font-bold text-white mb-2">${item.title}</h3>
+          <p class="text-gray-300 text-sm mb-3">${item.description}</p>
+          <div class="flex items-center justify-between text-sm text-gray-400">
+            <span>${item.year}</span>
+            <div class="flex items-center gap-4">
+              <span><i class="fas fa-eye mr-1"></i> ${item.views}</span>
+              <span><i class="fas fa-heart mr-1"></i> ${item.likes}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="absolute top-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+        <button class="bg-yellow-400 hover:bg-yellow-300 text-black p-2 rounded-full shadow-lg like-btn" data-id="${item.id}">
+          <i class="fas fa-heart"></i>
+        </button>
+      </div>
+    </div>
+  `;
+  
+  return div;
+}
+
+function setupFilterButtons() {
+  const filterButtons = document.querySelectorAll('.portfolio-filter');
+  
+  filterButtons.forEach(button => {
+    button.addEventListener('click', function() {
+      // Update active button
+      filterButtons.forEach(btn => {
+        btn.classList.remove('active', 'bg-yellow-400', 'text-black');
+        btn.classList.add('bg-gray-800', 'text-white');
+      });
+      
+      this.classList.add('active', 'bg-yellow-400', 'text-black');
+      this.classList.remove('bg-gray-800', 'text-white');
+      
+      // Update filter and reload items
+      currentFilter = this.dataset.filter;
+      currentPage = 1;
+      loadPortfolioItems();
+    });
+  });
+}
+
+// Load more functionality
+document.getElementById('loadMoreBtn').addEventListener('click', function() {
+  currentPage++;
+  loadPortfolioItems();
+});
+
+// Like functionality (placeholder)
+document.addEventListener('click', function(e) {
+  if (e.target.closest('.like-btn')) {
+    const btn = e.target.closest('.like-btn');
+    const itemId = btn.dataset.id;
+    const icon = btn.querySelector('i');
+    
+    if (icon.classList.contains('fas')) {
+      icon.classList.remove('fas');
+      icon.classList.add('far');
+      btn.classList.remove('bg-yellow-400');
+      btn.classList.add('bg-gray-600');
+    } else {
+      icon.classList.remove('far');
+      icon.classList.add('fas');
+      btn.classList.remove('bg-gray-600');
+      btn.classList.add('bg-yellow-400');
+    }
+  }
+});
+</script>
+{% endblock %}

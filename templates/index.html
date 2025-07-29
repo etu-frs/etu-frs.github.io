@@ -1,0 +1,551 @@
+{% extends "base.html" %}
+
+{% block title %}معرض أعمال فراس - خدمات التصميم الإبداعي{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="py-20 px-4 hero-gradient">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="text-right" data-aos="fade-right">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+          تصاميم <span class="text-yellow-400">إبداعية</span> تحول رؤيتك إلى <span class="text-yellow-400">واقع</span>
+        </h1>
+        
+        <p class="text-xl text-gray-300 mb-8">حلول تصميم مبتكرة تعزز هوية علامتك التجارية وتساعدك على التميز عن المنافسين</p>
+        
+        <div class="flex flex-wrap gap-4 justify-end">
+          <a href="#contact" class="bg-yellow-400 hover:bg-yellow-300 text-black px-8 py-3 rounded-full text-lg font-bold transition">
+            ابدأ مشروعك
+          </a>
+          <a href="#portfolio" class="bg-transparent border-2 border-yellow-400 text-yellow-400 px-8 py-3 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-black transition">
+            شاهد أعمالي
+          </a>
+        </div>
+      </div>
+      
+      <div class="relative" data-aos="fade-left">
+        <img src="https://source.unsplash.com/random/600x600/?design,creativity" alt="التصميم الإبداعي" class="rounded-lg shadow-2xl">
+        <div class="absolute -bottom-5 -left-5 bg-yellow-400 text-black py-3 px-6 rounded-lg font-bold">
+          <div class="flex items-center">
+            <lord-icon src="https://cdn.lordicon.com/msetysan.json" trigger="hover" style="width:30px;height:30px"></lord-icon>
+            <span class="mr-2">حلول إبداعية</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- About Me -->
+<section id="about" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/bhfjfgqz.json" trigger="hover" style="width:40px;height:40px"></lord-icon>
+      <span>من أنا؟</span>
+    </h2>
+    
+    <div class="grid md:grid-cols-2 gap-10 items-center">
+      <div class="relative" data-aos="fade-right">
+        <img src="https://source.unsplash.com/random/600x800/?designer,creative" alt="المصمم" class="rounded-lg shadow-xl">
+        <div class="absolute -top-5 -right-5 bg-yellow-400 text-black py-2 px-4 rounded-lg font-bold">
+          <div class="flex items-center">
+            <lord-icon src="https://cdn.lordicon.com/ajkxzzfb.json" trigger="hover" style="width:25px;height:25px"></lord-icon>
+            <span class="mr-2">خبرة +5 سنوات</span>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-right" data-aos="fade-left">
+        <h3 class="text-2xl font-bold mb-4">فراس الأحمد</h3>
+        <p class="text-lg text-gray-300 mb-6">مصمم محترف بخبرة تزيد عن 5 سنوات في إنشاء هويات بصرية مميزة للعلامات التجارية. أتخصص في تصميم الشعارات، الهوية البصرية، التصميم المطبوع، وجرافيكس منصات التواصل الاجتماعي.</p>
+        
+        <div class="space-y-4 mb-6">
+          <div class="flex items-start gap-3">
+            <div class="text-yellow-400 mt-1"><i class="fas fa-paint-brush"></i></div>
+            <div>
+              <strong>التفكير الإبداعي:</strong> أتعامل مع كل مشروع بأفكار مبتكرة وحلول إبداعية تجعل علامتك التجارية متميزة.
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="text-yellow-400 mt-1"><i class="fas fa-bullseye"></i></div>
+            <div>
+              <strong>التركيز على العميل:</strong> أعمل بشكل وثيق مع العملاء لفهم رؤيتهم وترجمتها إلى تصاميم مذهلة.
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="text-yellow-400 mt-1"><i class="fas fa-laptop-code"></i></div>
+            <div>
+              <strong>الكفاءة التقنية:</strong> خبير في حزمة Adobe Creative مع اهتمام دقيق بالتفاصيل والجودة.
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex flex-wrap gap-2 justify-end">
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">التصميم الجرافيكي</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">الهوية البصرية</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">تصميم الشعارات</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">السوشال ميديا</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">التصميم المطبوع</span>
+          <span class="bg-gray-800 text-gray-300 px-3 py-1 rounded-full">UI/UX</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Services -->
+<section id="services" class="py-20 px-4 bg-black">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/ynwbvguu.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>خدماتي</span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Service 1 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105 service-card" data-aos="fade-up" data-aos-delay="100">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/dtgezzsi.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">تصميم الشعارات</h3>
+        <p class="text-gray-300">إنشاء شعارات فريدة تعكس هوية مشروعك وتساعدك على التميز عن المنافسين.</p>
+        <a href="/service/logo-brand" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>شاهد المزيد</span>
+          <i class="fas fa-arrow-left mr-1"></i>
+        </a>
+      </div>
+      
+      <!-- Service 2 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105 service-card" data-aos="fade-up" data-aos-delay="200">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/gqdnbnwt.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">الهوية البصرية</h3>
+        <p class="text-gray-300">تطوير هوية بصرية متكاملة مع دليل الاستخدام الذي يضمن تناسق العلامة التجارية عبر جميع نقاط التلامس.</p>
+        <a href="/service/logo-brand" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>شاهد المزيد</span>
+          <i class="fas fa-arrow-left mr-1"></i>
+        </a>
+      </div>
+      
+      <!-- Service 3 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105 service-card" data-aos="fade-up" data-aos-delay="300">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/wloilxuq.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">التصميم المطبوع</h3>
+        <p class="text-gray-300">تصميم مطبوعات متنوعة مثل البروشورات والفلايرز والكتالوجات وبطاقات العمل بتصاميم جذابة.</p>
+        <a href="/service/print" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>شاهد المزيد</span>
+          <i class="fas fa-arrow-left mr-1"></i>
+        </a>
+      </div>
+      
+      <!-- Service 4 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105 service-card" data-aos="fade-up" data-aos-delay="400">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/tsnvgrkp.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">تصميم المواقع</h3>
+        <p class="text-gray-300">تصميم واجهات مواقع حديثة وسهلة الاستخدام تتناسب مع هوية مشروعك.</p>
+        <a href="#" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>شاهد المزيد</span>
+          <i class="fas fa-arrow-left mr-1"></i>
+        </a>
+      </div>
+      
+      <!-- Service 5 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105 service-card" data-aos="fade-up" data-aos-delay="500">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/masykznr.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">السوشال ميديا</h3>
+        <p class="text-gray-300">تصميم منشورات وقوالب لمنصات التواصل الاجتماعي تساعد في زيادة التفاعل.</p>
+        <a href="/service/social-media" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>شاهد المزيد</span>
+          <i class="fas fa-arrow-left mr-1"></i>
+        </a>
+      </div>
+      
+      <!-- Service 6 -->
+      <div class="bg-gray-900 p-8 rounded-xl transition-transform transform hover:scale-105 service-card" data-aos="fade-up" data-aos-delay="600">
+        <div class="text-4xl text-yellow-400 mb-4">
+          <lord-icon src="https://cdn.lordicon.com/rjzlnunf.json" trigger="hover" style="width:64px;height:64px"></lord-icon>
+        </div>
+        <h3 class="text-xl font-bold mb-3">تصميم أغلفة الكتب</h3>
+        <p class="text-gray-300">تصميم أغلفة جذابة للكتب والروايات تلفت انتباه القراء وتعبر عن محتوى الكتاب.</p>
+        <a href="/service/book-cover" class="inline-block mt-4 px-4 py-2 bg-yellow-400 hover:bg-yellow-300 text-black rounded-full transition">
+          <span>شاهد المزيد</span>
+          <i class="fas fa-arrow-left mr-1"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Portfolio -->
+<section id="portfolio" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/kxoxiwrf.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>معرض الأعمال</span>
+    </h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <!-- Project 1 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="100">
+        <img src="https://source.unsplash.com/600x400/?branding,logo" alt="مشروع 1" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">هوية بصرية لشركة تقنية</h3>
+          <p class="text-yellow-400">تصميم الهوية - 2023</p>
+        </div>
+      </div>
+      
+      <!-- Project 2 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="200">
+        <img src="https://source.unsplash.com/600x400/?design,packaging" alt="مشروع 2" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">تصميم غلاف كتاب</h3>
+          <p class="text-yellow-400">تصميم الأغلفة - 2022</p>
+        </div>
+      </div>
+      
+      <!-- Project 3 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="300">
+        <img src="https://source.unsplash.com/600x400/?ui,website" alt="مشروع 3" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">تصميم موقع ويب</h3>
+          <p class="text-yellow-400">تصميم المواقع - 2023</p>
+        </div>
+      </div>
+      
+      <!-- Project 4 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="400">
+        <img src="https://source.unsplash.com/600x400/?flyer,print" alt="مشروع 4" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">بروشور ترويجي</h3>
+          <p class="text-yellow-400">التصميم المطبوع - 2022</p>
+        </div>
+      </div>
+      
+      <!-- Project 5 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="500">
+        <img src="https://source.unsplash.com/600x400/?branding,identity" alt="مشروع 5" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">شعار مطعم</h3>
+          <p class="text-yellow-400">تصميم الشعارات - 2023</p>
+        </div>
+      </div>
+      
+      <!-- Project 6 -->
+      <div class="group relative overflow-hidden rounded-xl" data-aos="fade-up" data-aos-delay="600">
+        <img src="https://source.unsplash.com/600x400/?social,media" alt="مشروع 6" class="w-full h-64 object-cover transition-transform duration-500 transform group-hover:scale-110">
+        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-4">
+          <h3 class="text-xl font-bold text-white mb-1">إدارة السوشال ميديا</h3>
+          <p class="text-yellow-400">تصميم السوشال ميديا - 2022</p>
+        </div>
+      </div>
+    </div>
+    <div class="text-center mt-10">
+      <a href="/portfolio" class="inline-block bg-transparent border-2 border-yellow-400 text-yellow-400 px-6 py-3 rounded-full text-lg font-bold hover:bg-yellow-400 hover:text-black transition">عرض المزيد من الأعمال</a>
+    </div>
+  </div>
+</section>
+
+<!-- Testimonials -->
+<section id="testimonials" class="py-20 px-4 bg-black">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/hbvgknxo.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>آراء العملاء</span>
+    </h2>
+    
+    <div class="relative mb-10">
+      <div class="testimonials-container grid grid-cols-1 md:grid-cols-3 gap-6" id="testimonialsContainer">
+        {% if testimonials %}
+          {% for testimonial in testimonials %}
+          <div class="testimonial-card bg-gray-900 p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="{{ loop.index * 100 }}">
+            <div class="rating-display mb-3" data-rating="{{ testimonial.rating }}">
+              {% for i in range(testimonial.rating) %}
+                <i class="fas fa-star text-yellow-400"></i>
+              {% endfor %}
+              {% for i in range(5 - testimonial.rating) %}
+                <i class="far fa-star text-gray-400"></i>
+              {% endfor %}
+            </div>
+            <p class="text-gray-300 mb-4">"{{ testimonial.content }}"</p>
+            <div class="flex items-center justify-between">
+              <div>
+                <h4 class="text-lg font-bold">{{ testimonial.name }}</h4>
+                {% if testimonial.company %}
+                <p class="text-yellow-400 text-sm">{{ testimonial.company }}</p>
+                {% endif %}
+              </div>
+              <div class="text-gray-500 text-sm">
+                {{ testimonial.created_at.strftime('%Y-%m-%d') }}
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-span-3 text-center py-10">
+            <p class="text-gray-400">لا توجد آراء بعد. كن أول من يضيف رأيه!</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+    
+    <div class="bg-gray-900 p-8 rounded-xl max-w-3xl mx-auto" data-aos="fade-up">
+      <h3 class="text-xl font-bold mb-4 text-center">شارك تجربتك مع خدماتنا</h3>
+      
+      <form id="testimonialForm" method="post" class="space-y-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-gray-400 mb-2">الاسم <span class="text-yellow-400">*</span></label>
+            <input type="text" name="name" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required>
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-2">الشركة</label>
+            <input type="text" name="company" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-gray-400 mb-2">التقييم</label>
+          <div class="flex text-2xl">
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="1"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="2"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="3"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="4"></i>
+            <i class="fas fa-star rating-star text-yellow-400 cursor-pointer" data-value="5"></i>
+            <input type="hidden" name="rating" value="5">
+          </div>
+        </div>
+        
+        <div>
+          <label class="block text-gray-400 mb-2">التعليق <span class="text-yellow-400">*</span></label>
+          <textarea name="content" rows="4" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required></textarea>
+        </div>
+        
+        <div class="text-center">
+          <button type="submit" class="bg-yellow-400 hover:bg-yellow-300 text-black font-bold px-6 py-3 rounded-full transition">إرسال التقييم</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Me -->
+<section id="contact" class="py-20 px-4 bg-gray-900">
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-3xl font-bold text-yellow-400 text-center mb-12 flex items-center justify-center gap-3" data-aos="fade-up">
+      <lord-icon src="https://cdn.lordicon.com/diihvcfp.json" trigger="loop" style="width:40px;height:40px"></lord-icon>
+      <span>تواصل معي</span>
+    </h2>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
+      <div class="space-y-8" data-aos="fade-right">
+        <div class="flex items-center gap-4">
+          <div class="text-yellow-400 text-2xl">
+            <lord-icon src="https://cdn.lordicon.com/cnbtojmk.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1">البريد الإلكتروني</h3>
+            <p class="text-gray-300">info@firas-designs.com</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <div class="text-yellow-400 text-2xl">
+            <lord-icon src="https://cdn.lordicon.com/tftaqjwp.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1">الهاتف</h3>
+            <p class="text-gray-300">+213 770 123 456</p>
+          </div>
+        </div>
+        
+        <div class="flex items-center gap-4">
+          <div class="text-yellow-400 text-2xl">
+            <lord-icon src="https://cdn.lordicon.com/osuxyevn.json" trigger="hover" style="width:48px;height:48px"></lord-icon>
+          </div>
+          <div>
+            <h3 class="text-xl font-bold mb-1">العنوان</h3>
+            <p class="text-gray-300">الجزائر العاصمة، الجزائر</p>
+          </div>
+        </div>
+        
+        <div class="flex gap-4 mt-8">
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-instagram text-xl"></i>
+          </a>
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-behance text-xl"></i>
+          </a>
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-dribbble text-xl"></i>
+          </a>
+          <a href="#" class="bg-gray-800 hover:bg-gray-700 text-white p-3 rounded-full transition">
+            <i class="fab fa-linkedin-in text-xl"></i>
+          </a>
+        </div>
+      </div>
+      
+      <div class="bg-gray-800 rounded-xl p-8" data-aos="fade-left">
+        <h3 class="text-xl font-bold mb-6">أرسل لي رسالة</h3>
+        <form id="contactForm" class="space-y-4">
+          <div>
+            <label class="block text-gray-400 mb-2">الاسم <span class="text-yellow-400">*</span></label>
+            <input type="text" name="name" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required>
+          </div>
+          
+          <div>
+            <label class="block text-gray-400 mb-2">البريد الإلكتروني <span class="text-yellow-400">*</span></label>
+            <input type="email" name="email" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required>
+          </div>
+          
+          <div>
+            <label class="block text-gray-400 mb-2">الموضوع</label>
+            <input type="text" id="subjectField" name="subject" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none">
+          </div>
+          
+          <div>
+            <label class="block text-gray-400 mb-2">الرسالة <span class="text-yellow-400">*</span></label>
+            <textarea rows="4" name="message" class="w-full bg-gray-700 border border-gray-600 rounded-lg p-3 text-white focus:border-yellow-400 focus:outline-none" required></textarea>
+          </div>
+          
+          <div>
+            <button type="submit" class="w-full bg-yellow-400 hover:bg-yellow-300 text-black font-bold py-3 rounded-lg transition">إرسال الرسالة</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+  // Testimonial form submission
+  document.getElementById('testimonialForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    
+    fetch('/api/testimonial/add', {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        this.reset();
+        // Reset rating stars
+        document.querySelectorAll('.rating-star').forEach(star => {
+          star.className = 'fas fa-star rating-star text-yellow-400 cursor-pointer';
+        });
+        document.querySelector('input[name="rating"]').value = '5';
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('حدث خطأ في النظام. يرجى المحاولة مرة أخرى لاحقا.');
+    });
+  });
+
+  // Contact form submission
+  document.getElementById('contactForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const data = {};
+    formData.forEach((value, key) => {
+      data[key] = value;
+    });
+    
+    fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(data)
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        alert(data.message);
+        this.reset();
+      } else {
+        alert(data.message);
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      alert('حدث خطأ في النظام. يرجى المحاولة مرة أخرى لاحقا.');
+    });
+  });
+
+  // Rating stars interaction
+  const ratingStars = document.querySelectorAll('.rating-star');
+  const ratingInput = document.querySelector('input[name="rating"]');
+  
+  ratingStars.forEach((star, index) => {
+    star.addEventListener('click', function() {
+      const rating = index + 1;
+      ratingInput.value = rating;
+      
+      ratingStars.forEach((s, i) => {
+        if (i < rating) {
+          s.className = 'fas fa-star rating-star text-yellow-400 cursor-pointer';
+        } else {
+          s.className = 'far fa-star rating-star text-gray-400 cursor-pointer';
+        }
+      });
+    });
+    
+    star.addEventListener('mouseenter', function() {
+      const rating = index + 1;
+      ratingStars.forEach((s, i) => {
+        if (i < rating) {
+          s.className = 'fas fa-star rating-star text-yellow-400 cursor-pointer';
+        } else {
+          s.className = 'far fa-star rating-star text-gray-400 cursor-pointer';
+        }
+      });
+    });
+  });
+
+  // Reset stars on mouse leave
+  document.querySelector('.rating-star').parentElement.addEventListener('mouseleave', function() {
+    const currentRating = parseInt(ratingInput.value);
+    ratingStars.forEach((s, i) => {
+      if (i < currentRating) {
+        s.className = 'fas fa-star rating-star text-yellow-400 cursor-pointer';
+      } else {
+        s.className = 'far fa-star rating-star text-gray-400 cursor-pointer';
+      }
+    });
+  });
+
+  // Service selection for contact form
+  document.addEventListener('DOMContentLoaded', function() {
+    const selectedService = sessionStorage.getItem('selectedService');
+    if (selectedService) {
+      const subjectField = document.getElementById('subjectField');
+      if (subjectField) {
+        subjectField.value = 'استفسار حول: ' + selectedService;
+      }
+      
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  });
+</script>
+{% endblock %}
